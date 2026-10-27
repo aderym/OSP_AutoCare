@@ -1,0 +1,357 @@
+{
+  "updated": "2026-10-26",
+  "categories": [
+    {
+      "id": "videos",
+      "en": "How-to videos",
+      "es": "Videos de reparación"
+    },
+    {
+      "id": "exploded",
+      "en": "Exploded parts diagrams",
+      "es": "Despieces de partes"
+    },
+    {
+      "id": "wiring",
+      "en": "Wiring & repair systems",
+      "es": "Diagramas eléctricos y reparación"
+    },
+    {
+      "id": "oem",
+      "en": "OEM service portals",
+      "es": "Portales de servicio OEM"
+    },
+    {
+      "id": "manuals",
+      "en": "Repair guides",
+      "es": "Guías de reparación"
+    },
+    {
+      "id": "bulletins",
+      "en": "Recalls & TSBs",
+      "es": "Retiros y boletines"
+    },
+    {
+      "id": "diagnostics",
+      "en": "Testing & diagnostics",
+      "es": "Pruebas y diagnóstico"
+    },
+    {
+      "id": "collision",
+      "en": "Collision & ADAS",
+      "es": "Colisión y ADAS"
+    },
+    {
+      "id": "paint",
+      "en": "Paint & product sheets",
+      "es": "Pintura y fichas técnicas"
+    },
+    {
+      "id": "training",
+      "en": "Technician training",
+      "es": "Formación técnica"
+    }
+  ],
+  "resources": [
+    {
+      "id": "carcarekiosk",
+      "name": "CarCareKiosk",
+      "category": "videos",
+      "access": "free",
+      "url": "https://www.carcarekiosk.com/",
+      "description": "Vehicle-specific maintenance and repair videos. Select the exact vehicle on the provider site.",
+      "es": "Videos de mantenimiento y reparación por vehículo. Seleccione el vehículo exacto en el sitio.",
+      "makes": "all",
+      "source": "https://www.carcarekiosk.com/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "1aauto",
+      "name": "1A Auto Video Library",
+      "category": "videos",
+      "access": "free",
+      "url": "https://www.1aauto.com/videos",
+      "description": "Repair demonstrations and component replacement videos.",
+      "es": "Demostraciones de reparación y reemplazo de componentes.",
+      "makes": "all",
+      "source": "https://www.1aauto.com/videos",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "autozone",
+      "name": "AutoZone Repair Help",
+      "category": "manuals",
+      "access": "account",
+      "url": "https://www.autozone.com/lp/repair-help",
+      "description": "Repair help and selected vehicle guides; guide access may require a Rewards account.",
+      "es": "Ayuda y guías para determinados vehículos; algunas requieren una cuenta Rewards.",
+      "makes": "all",
+      "source": "https://www.autozone.com/lp/repair-help",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "partsouq",
+      "name": "PartSouq Genuine Catalogs",
+      "category": "exploded",
+      "access": "free",
+      "url": "https://partsouq.com/en/catalog/genuine",
+      "description": "Parts catalog navigation by brand and VIN/frame, with component catalog illustrations.",
+      "es": "Catálogos por marca y VIN/chasis, con ilustraciones de componentes.",
+      "makes": "all",
+      "source": "https://partsouq.com/en/catalog/genuine",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "amayama",
+      "name": "Amayama Genuine Catalogs",
+      "category": "exploded",
+      "access": "free",
+      "url": "https://www.amayama.com/en/genuine-catalogs",
+      "description": "Illustrated genuine parts catalogs; match market, production date and vehicle specification.",
+      "es": "Catálogos ilustrados de partes originales; confirme mercado, fecha de producción y versión.",
+      "makes": "all",
+      "source": "https://www.amayama.com/en/genuine-catalogs",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "realoem",
+      "name": "RealOEM BMW Parts",
+      "category": "exploded",
+      "access": "free",
+      "url": "https://www.realoem.com/bmw/enUS/select",
+      "description": "BMW part numbers arranged in component diagrams. Independent catalog, not BMW service procedures.",
+      "es": "Números de parte BMW organizados en despieces. Catálogo independiente, no procedimientos de servicio BMW.",
+      "makes": "BMW",
+      "source": "https://www.realoem.com/bmw/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "7zap",
+      "name": "7zap OEM Parts Catalogs",
+      "category": "exploded",
+      "access": "mixed",
+      "url": "https://7zap.com/en/catalog/cars/",
+      "description": "Multi-brand exploded diagrams and part numbers; some functions use paid access.",
+      "es": "Despieces multimarca y números de parte; algunas funciones requieren pago.",
+      "makes": "all",
+      "source": "https://7zap.com/en/catalog/cars/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "alldata",
+      "name": "ALLDATA Repair",
+      "category": "wiring",
+      "access": "paid",
+      "url": "https://www.alldata.com/us/en/repair",
+      "description": "Professional OEM procedures, wiring diagrams and diagnostic/service information. Separate subscription.",
+      "es": "Procedimientos OEM, diagramas eléctricos e información de diagnóstico y servicio. Suscripción aparte.",
+      "makes": "all",
+      "source": "https://www.alldata.com/us/en/repair",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "alldatadiy",
+      "name": "ALLDATAdiy",
+      "category": "manuals",
+      "access": "paid",
+      "url": "https://www.alldata.com/diy-us/en/diy-repair-information",
+      "description": "Single-vehicle repair information and diagrams, with its own subscription.",
+      "es": "Información de reparación y diagramas para un vehículo, con suscripción propia.",
+      "makes": "all",
+      "source": "https://www.alldata.com/diy-us/en/diy-repair-information",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "prodemand",
+      "name": "Mitchell 1 ProDemand",
+      "category": "wiring",
+      "access": "paid",
+      "url": "https://get.mitchell1.com/prodemand/",
+      "description": "Professional repair information, interactive wiring diagrams and service bulletins.",
+      "es": "Información profesional de reparación, diagramas eléctricos interactivos y boletines.",
+      "makes": "all",
+      "source": "https://mitchell1.com/shopconnection/prodemand-update-enhanced-wiring-diagrams/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "toyota",
+      "name": "Toyota / Lexus TIS",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://techinfo.toyota.com/",
+      "description": "Factory service information and wiring diagrams for supported North American Toyota-group vehicles.",
+      "es": "Información de fábrica y diagramas eléctricos para vehículos Toyota del mercado norteamericano compatibles.",
+      "makes": "Toyota Lexus Scion",
+      "source": "https://support.toyota.com/s/article/Where-can-I-find-Toyo-7707?language=en_US",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "ford",
+      "name": "Ford / Lincoln Motorcraft Service",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.motorcraftservice.com/Home/Index",
+      "description": "Factory service publications and technical resources for Ford-family vehicles.",
+      "es": "Publicaciones y recursos técnicos de fábrica para vehículos de la familia Ford.",
+      "makes": "Ford Lincoln Mercury",
+      "source": "https://www.motorcraft.com/us/en_us/home/technical-resources.html/1000",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "honda",
+      "name": "Honda / Acura Service Information",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://techinfo.honda.com/",
+      "description": "Manufacturer service information, specifications, bulletins and repair documentation.",
+      "es": "Información de servicio del fabricante, especificaciones, boletines y documentación de reparación.",
+      "makes": "Honda Acura",
+      "source": "https://techinfo.honda.com/rjanisis/pubs/Web/RJAAI001_LOGON_CONTENT.htm",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "bmw",
+      "name": "BMW Group TechInfo",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://bmwtechinfo.bmwgroup.com/",
+      "description": "BMW manufacturer technical information. Confirm the required subscription and software.",
+      "es": "Información técnica del fabricante BMW. Confirme suscripción y software necesarios.",
+      "makes": "BMW",
+      "source": "https://bmwtechinfo.bmwgroup.com/assets/system_requirements.pdf",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "nissan",
+      "name": "Nissan / INFINITI TechInfo",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.nissan-techinfo.com/",
+      "description": "Service manuals, bulletins and technical publications for supported Nissan/INFINITI vehicles.",
+      "es": "Manuales, boletines y publicaciones para vehículos Nissan/INFINITI compatibles.",
+      "makes": "Nissan Infiniti",
+      "source": "https://www.nissan-techinfo.com/help.aspx",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "vw",
+      "name": "Volkswagen erWin",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://volkswagen.erwin-store.com/",
+      "description": "Manufacturer repair and wiring information; choose the market applicable to the vehicle.",
+      "es": "Información de reparación y cableado del fabricante; seleccione el mercado correspondiente al vehículo.",
+      "makes": "Volkswagen",
+      "source": "https://volkswagen.erwin-store.com/erwin/showInfoTour.do",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "nastf",
+      "name": "NASTF OEM Information Resources",
+      "category": "oem",
+      "access": "mixed",
+      "url": "https://support.nastf.org/support/solutions/folders/43000544177",
+      "description": "Locate manufacturer information resources and support for independent repair access.",
+      "es": "Localice recursos del fabricante y soporte de acceso para talleres independientes.",
+      "makes": "all",
+      "source": "https://support.nastf.org/support/solutions/folders/43000544177",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "nhtsa",
+      "name": "NHTSA Recalls & Manufacturer Communications",
+      "category": "bulletins",
+      "access": "free",
+      "url": "https://www.nhtsa.gov/recalls",
+      "description": "Search recalls and manufacturer communications by vehicle; verify VIN-specific applicability separately.",
+      "es": "Busque retiros y comunicaciones por vehículo; confirme por separado la aplicación al VIN exacto.",
+      "makes": "all",
+      "source": "https://www.nhtsa.gov/resources-investigations-recalls",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "icar",
+      "name": "I-CAR Repairability Technical Support",
+      "category": "collision",
+      "access": "mixed",
+      "url": "https://rts.i-car.com/",
+      "description": "Collision references, OEM calibration resources and repairability research; access varies by feature.",
+      "es": "Referencias de colisión, calibración OEM e investigación de reparabilidad; el acceso depende de la función.",
+      "makes": "all",
+      "source": "https://rts.i-car.com/rts-subscription.html",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "3m",
+      "name": "3M Collision Repair Resources",
+      "category": "collision",
+      "access": "free",
+      "url": "https://www.3m.com/3M/en_US/collision-repair-us/resources/",
+      "description": "Collision process guides, operating procedures and product safety resources.",
+      "es": "Guías de procesos de colisión, procedimientos y recursos de seguridad de productos.",
+      "makes": "all",
+      "source": "https://www.3m.com/3M/en_US/collision-repair-us/resources/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "3mcorrosion",
+      "name": "3M Corrosion Protection Procedures",
+      "category": "collision",
+      "access": "free",
+      "url": "https://www.3m.com/3M/en_US/collision-repair-us/applications/corrosion-protection/",
+      "description": "Product-specific seam-sealing and corrosion-protection process references.",
+      "es": "Referencias de sellado de juntas y protección anticorrosiva según el producto.",
+      "makes": "all",
+      "source": "https://www.3m.com/3M/en_US/collision-repair-us/applications/corrosion-protection/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "ppg",
+      "name": "PPG Refinish Technical & Safety Sheets",
+      "category": "paint",
+      "access": "free",
+      "url": "https://www.ppg.com/en-US/refinish/products/shop-line",
+      "description": "Product data and safety sheets for the listed coating system; use the exact product code.",
+      "es": "Fichas técnicas y de seguridad del sistema indicado; use el código exacto del producto.",
+      "makes": "all",
+      "source": "https://www.ppg.com/en-US/refinish/products/shop-line",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "pico",
+      "name": "Pico Automotive Guided Tests",
+      "category": "diagnostics",
+      "access": "free",
+      "url": "https://www.picoauto.com/library/automotive-guided-tests/",
+      "description": "Guided electrical testing and measurement references; some functions require compatible equipment.",
+      "es": "Referencias de pruebas eléctricas y medición; ciertas funciones necesitan equipo compatible.",
+      "makes": "all",
+      "source": "https://www.picoauto.com/library/automotive-guided-tests/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "ase",
+      "name": "ASE Accredited Training",
+      "category": "training",
+      "access": "mixed",
+      "url": "https://ase.com/find-accredited-training/",
+      "description": "Directory of evaluated technician-training providers; course prices and registration vary.",
+      "es": "Directorio de formación técnica evaluada; el precio y registro dependen del curso.",
+      "makes": "all",
+      "source": "https://ase.com/find-accredited-training/",
+      "checked": "2026-10-26"
+    },
+    {
+      "id": "denso",
+      "name": "DENSO Auto Care Training",
+      "category": "training",
+      "access": "mixed",
+      "url": "https://www.densoautocare.com/training/",
+      "description": "Manufacturer training resources and course information for automotive professionals.",
+      "es": "Recursos de capacitación del fabricante e información de cursos para profesionales.",
+      "makes": "all",
+      "source": "https://www.densoautocare.com/training/",
+      "checked": "2026-10-26"
+    }
+  ]
+}

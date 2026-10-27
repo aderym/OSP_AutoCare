@@ -1,0 +1,8 @@
+import {sqliteTable,text,integer,index} from 'drizzle-orm/sqlite-core';
+export const shops=sqliteTable('shops',{id:text('id').primaryKey(),name:text('name').notNull(),profile:text('profile').notNull().default('{}'),enabled:integer('enabled').notNull().default(1),paidUntil:integer('paid_until').notNull().default(0),subscriptionId:text('subscription_id'),trialUntil:integer('trial_until').notNull().default(0),registrationEmail:text('registration_email').unique(),created:text('created').notNull()});
+export const users=sqliteTable('users',{id:text('id').primaryKey(),shopId:text('shop_id').notNull(),username:text('username').notNull().unique(),name:text('name').notNull(),role:text('role').notNull(),password:text('password').notNull(),active:integer('active').notNull().default(1)});
+export const sessions=sqliteTable('sessions',{token:text('token').primaryKey(),userId:text('user_id').notNull(),expires:integer('expires').notNull()});
+export const attempts=sqliteTable('auth_attempts',{key:text('key').primaryKey(),count:integer('count').notNull(),until:integer('until').notNull()});
+export const payments=sqliteTable('payment_settings',{shopId:text('shop_id').primaryKey(),data:text('data').notNull()});
+const record=(name:string)=>sqliteTable(name,{id:text('id').primaryKey(),shopId:text('shop_id').notNull(),data:text('data').notNull(),updated:text('updated').notNull()},t=>[index(name+'_shop_idx').on(t.shopId)]);
+export const customers=record('customers');export const vehicles=record('vehicles');export const suppliers=record('suppliers');export const inventory=record('inventory');export const workorders=record('workorders');export const services=record('services');export const purchases=record('purchases');export const diagrams=record('diagrams');

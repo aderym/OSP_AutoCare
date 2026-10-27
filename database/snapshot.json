@@ -1,0 +1,55 @@
+{
+  "format": "osp-autocare-portable-snapshot",
+  "version": 1,
+  "sourceProject": "appgprj_6adff99a8e8c81919bca31a60071996c",
+  "capturedAt": "2026-10-27T19:09:34.569Z",
+  "excluded": [
+    "all password hashes",
+    "sessions",
+    "auth_attempts",
+    "payment_settings"
+  ],
+  "limitations": [
+    "The hosted database reader truncated the demo business profile at its embedded logo. Contact fields preceding the logo were recovered. The embedded logo and any profile fields after it could not be exported; the app uses the bundled logo and default tax when absent."
+  ],
+  "tables": {
+    "diagrams": [
+      {
+        "id": "a8bf3ccd-1698-4c78-ad94-b728722ac3ab",
+        "shop_id": "demo",
+        "data": "{\"title\":\"RealOEM BMW Parts\",\"vehicle\":\"\",\"workorder\":\"\",\"category\":\"exploded\",\"url\":\"https://www.realoem.com/bmw/enUS/select\",\"source\":\"https://www.realoem.com/bmw/\",\"notes\":\"\"}",
+        "updated": "2026-10-27T02:29:25.142Z"
+      }
+    ],
+    "purchases": [],
+    "customers": [],
+    "inventory": [],
+    "services": [],
+    "suppliers": [],
+    "vehicles": [],
+    "workorders": [],
+    "users": [
+      {
+        "id": "b342aff8-bb8a-4b99-90e8-eee3517fe813",
+        "shop_id": "demo",
+        "username": "osp",
+        "name": "OSP Administrator",
+        "role": "owner",
+        "active": 1
+      }
+    ],
+    "shops": [
+      {
+        "id": "demo",
+        "name": "OSP AutoCare · Demo",
+        "profile": "{\"ownerName\":\"\",\"address\":\"\",\"phone\":\"\",\"email\":\"\",\"logo\":\"\"}",
+        "enabled": 1,
+        "paid_until": 0,
+        "subscription_id": null,
+        "created": "2026-10-27T01:22:33.193Z",
+        "trial_until": 0,
+        "registration_email": null
+      }
+    ]
+  }
+}

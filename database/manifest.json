@@ -1,0 +1,29 @@
+{
+  "format": "osp-autocare-portable-snapshot",
+  "version": 1,
+  "sourceProject": "appgprj_6adff99a8e8c81919bca31a60071996c",
+  "capturedAt": "2026-10-27T19:09:34.569Z",
+  "excluded": [
+    "all password hashes",
+    "sessions",
+    "auth_attempts",
+    "payment_settings"
+  ],
+  "limitations": [
+    "The hosted database reader truncated the demo business profile at its embedded logo. Contact fields preceding the logo were recovered. The embedded logo and any profile fields after it could not be exported; the app uses the bundled logo and default tax when absent."
+  ],
+  "counts": {
+    "diagrams": 1,
+    "purchases": 0,
+    "customers": 0,
+    "inventory": 0,
+    "services": 0,
+    "suppliers": 0,
+    "vehicles": 0,
+    "workorders": 0,
+    "users": 1,
+    "shops": 1
+  },
+  "localCredentials": "All snapshot accounts are disabled and all password fields are empty. After copying SQLite to a fresh runtime path, run initialize_owner.py for that copy to choose the local OSP password. No live or generated password hash is committed.",
+  "catalog": "The 50,407 vehicle configurations and 284 part names remain in public/vehicle-catalog and public/parts-catalog.json, separate from workshop customer records."
+}

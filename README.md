@@ -41,7 +41,7 @@ English / Español. Dark green, black and white. This package includes the compl
 - Username: `osp`
 - Initial password: set `BOOTSTRAP_ADMIN_PASSWORD` in your local environment.
 - OSP is the platform owner/administrator. Sign in directly; no signup, trial or subscription is required for this account. Public registration is for independent workshop moderators. Login clears the previous selected workshop; an invalid stored workshop falls back safely to the owner workspace. The owner Subscription page manages collection settings, not a personal paid plan.
-- The hosted review is owner-private: if a ChatGPT access gate appears, continue with the ChatGPT account that owns this Site first. Then use the OSP application login. Those are separate sign-in screens.
+- The hosted review is public and opens the OSP application login directly; no ChatGPT account is required. Workshop records remain protected by the application session and tenant permissions.
 - Change it from Settings → Account security. Changing it invalidates existing sessions.
 - The initial account is created server-side on the first sign-in, using `BOOTSTRAP_ADMIN_PASSWORD`. Passwords are stored with PBKDF2-SHA256, unique salts and 100,000 iterations.
 
@@ -89,7 +89,7 @@ Never serve the SQLite database or environment files publicly.
 - `moderator`: workshop owner/manager; manages its profile, employees, records and own payment settings.
 - `employee`: operates only within its workshop; cannot administer subscriptions, payment settings, users, exports or delete records.
 
-Tenant selection is checked server-side; employee/moderator requests cannot change shop by passing another ID. Usernames are globally unique. Employee disabling/reset revokes that employee's sessions. Public signup passwords require 8–128 characters; existing administrator-created credentials and password changes retain the six-character minimum. Sign-in throttles failed attempts for 15 minutes. Public signup is rate limited, usernames are unique, and the original normalized registration email can receive only one trial. Profile edits and sign-ins never reset the trial; the expiry is stored separately from the editable profile. Email ownership is not verified in this release; different emails can create separate workshops. Existing workshops are not retroactively granted trials. The review Site keeps its owner-private audience; external self-service registration on the final VPS requires that the application URL be publicly reachable, while its workspace records remain protected by app login.
+Tenant selection is checked server-side; employee/moderator requests cannot change shop by passing another ID. Usernames are globally unique. Employee disabling/reset revokes that employee's sessions. Public signup passwords require 8–128 characters; existing administrator-created credentials and password changes retain the six-character minimum. Sign-in throttles failed attempts for 15 minutes. Public signup is rate limited, usernames are unique, and the original normalized registration email can receive only one trial. Profile edits and sign-ins never reset the trial; the expiry is stored separately from the editable profile. Email ownership is not verified in this release; different emails can create separate workshops. Existing workshops are not retroactively granted trials. The review Site is publicly reachable for self-service registration; its workspace records remain protected by app login.
 
 ## Stripe and Autobooks
 
@@ -188,3 +188,7 @@ Official API references checked for implementation:
 - https://developers.openai.com/api/docs/guides/text
 - https://developers.openai.com/api/docs/guides/migrate-to-responses
 - https://developers.openai.com/api/docs/models/gpt-4.1-mini
+
+## Versioned database copy
+
+See [`database/README.md`](database/README.md) for the portable SQLite database, SQL schema/data, JSON snapshot, capture counts and restore instructions. This repository copy excludes live password hashes, sessions and payment/API credentials. The large custom demo logo was truncated by the hosted data reader and is omitted; this limitation is documented in the manifest. All snapshot accounts are disabled with empty password fields. Run `database/initialize_owner.py` on a copied runtime database to set a local OSP credential; no password hash is committed. It is a fixed portable snapshot, not automatic live database synchronization.

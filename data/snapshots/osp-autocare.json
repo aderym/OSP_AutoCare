@@ -1,0 +1,32 @@
+{
+  "format": 1,
+  "captured_at": "2026-10-27T19:11:30.110Z",
+  "source_site": "https://osp-autocare-workshop.onlinesoftwa-5526.chatgpt.site/",
+  "source_commit": "e64dc4a4b14b341cafe867735d5cecaa3812170e",
+  "sha256": "6a89a596eb463cec251ce91ee52debeffe07c2bfa1a597568ec77d6110cdf78a",
+  "row_counts": {
+    "customers": 0,
+    "diagrams": 1,
+    "inventory": 0,
+    "payment_settings": 1,
+    "purchases": 0,
+    "services": 0,
+    "suppliers": 0,
+    "users": 1,
+    "vehicles": 0,
+    "workorders": 0,
+    "shops": 1,
+    "sessions": 0,
+    "auth_attempts": 0
+  },
+  "excluded": [
+    "sessions",
+    "auth_attempts",
+    "payment_settings.secret",
+    "payment_settings.webhook",
+    "payment_settings.aiSecret",
+    "runtime environment secrets",
+    "users.password"
+  ],
+  "scope": "Portable copy of workshop records and user identities. Passwords, sessions and service secrets excluded. The standalone owner is initialized from BOOTSTRAP_ADMIN_PASSWORD."
+}

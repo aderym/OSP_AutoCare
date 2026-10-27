@@ -1,11 +1,45 @@
 # OSP AutoCare — Mechanical, body & paint workshop management
 
+## Copia del Site para el entorno de pruebas
+
+El código de esta copia coincide con la versión 8 del Site. La base portable está
+en `data/snapshots/osp-autocare.sqlite`: es una copia de los registros actuales de
+D1, con el perfil completo del taller y su logo, usuarios y biblioteca técnica.
+`data/snapshots/osp-autocare.json` indica la fecha de captura, los conteos y SHA-256.
+No contiene contraseñas, sesiones, bloqueos temporales ni claves de OpenAI/Stripe/webhook.
+Al iniciar, el administrador local de esta copia recibe la contraseña de
+`BOOTSTRAP_ADMIN_PASSWORD`; no se modifica una contraseña que ya esté inicializada.
+Las claves se configuran por separado en el entorno de pruebas.
+
+Para el Compose externo ubicado en `~/OSP_AutoCare_Docker_Local`, con el repositorio
+montado desde `apps/OSP_AutoCare`, ejecutar:
+
+```bash
+cd ~/OSP_AutoCare_Docker_Local
+docker compose -f docker-compose.yml stop osp-autocare
+git -C apps/OSP_AutoCare pull --ff-only
+docker compose -f docker-compose.yml run --rm --no-deps -T --entrypoint node osp-autocare scripts/restore-test-db.mjs --app-stopped
+docker compose -f docker-compose.yml up -d osp-autocare
+```
+
+Ejecutar cada paso solo si el anterior termina correctamente. El comando de
+restauración verifica la integridad y el checksum; si existe una base local,
+primero crea un respaldo consistente en `runtime/backups/` y después la reemplaza
+por la copia del Site. Los datos locales adicionales quedan en ese respaldo,
+no se fusionan con los del Site. Detener también cualquier otro proceso que use
+el mismo archivo SQLite antes de restaurar.
+
+El archivo de trabajo `runtime/osp-autocare.sqlite` sigue fuera de Git. `git pull`
+descarga la copia guardada, pero solo el comando explícito de restauración cambia
+la base local. Las escrituras posteriores del Site no actualizan automáticamente
+el archivo del repositorio: una nueva sincronización requiere otra captura.
+
 English / Español. Dark green, black and white. This package includes the complete source, hosted Sites configuration, SQLite schema, Node standalone server and Docker configuration.
 
 ## Administrator
 
 - Username: `osp`
-- Initial password: `101010`
+- Initial password: set `BOOTSTRAP_ADMIN_PASSWORD` in your local environment.
 - OSP is the platform owner/administrator. Sign in directly; no signup, trial or subscription is required for this account. Public registration is for independent workshop moderators. Login clears the previous selected workshop; an invalid stored workshop falls back safely to the owner workspace. The owner Subscription page manages collection settings, not a personal paid plan.
 - The hosted review is owner-private: if a ChatGPT access gate appears, continue with the ChatGPT account that owns this Site first. Then use the OSP application login. Those are separate sign-in screens.
 - Change it from Settings → Account security. Changing it invalidates existing sessions.

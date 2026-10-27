@@ -48,3 +48,13 @@ runtime/
 standalone-dist/
 
 !.env.example
+
+# Local Docker/reverse-proxy infrastructure lives outside this app repository.
+/Dockerfile*
+/.dockerignore
+/compose*.yml
+/compose*.yaml
+/docker-compose*.yml
+/docker-compose*.yaml
+/docker/
+/nginx/

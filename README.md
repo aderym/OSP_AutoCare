@@ -11,11 +11,11 @@ Al iniciar, el administrador local de esta copia recibe la contraseña de
 `BOOTSTRAP_ADMIN_PASSWORD`; no se modifica una contraseña que ya esté inicializada.
 Las claves se configuran por separado en el entorno de pruebas.
 
-Para el Compose externo ubicado en `~/OSP_AutoCare_Docker_Local`, con el repositorio
-montado desde `apps/OSP_AutoCare`, ejecutar:
+El entorno Docker y Nginx se administra fuera de este repositorio. En tu estructura,
+`remoto_ssh/docker-compose.yml` monta `remoto_ssh/apps/OSP_AutoCare` en `/app`.
+Desde la carpeta `remoto_ssh`, ejecutar:
 
 ```bash
-cd ~/OSP_AutoCare_Docker_Local
 docker compose -f docker-compose.yml stop osp-autocare
 git -C apps/OSP_AutoCare pull --ff-only
 docker compose -f docker-compose.yml run --rm --no-deps -T --entrypoint node osp-autocare scripts/restore-test-db.mjs --app-stopped
@@ -34,7 +34,7 @@ descarga la copia guardada, pero solo el comando explícito de restauración cam
 la base local. Las escrituras posteriores del Site no actualizan automáticamente
 el archivo del repositorio: una nueva sincronización requiere otra captura.
 
-English / Español. Dark green, black and white. This package includes the complete source, hosted Sites configuration, SQLite schema, Node standalone server and Docker configuration.
+English / Español. Dark green, black and white. This package includes the complete source, hosted Sites configuration, SQLite schema and Node standalone server. Docker Compose, Dockerfiles and Nginx configuration are maintained in the separate local infrastructure directory.
 
 ## Administrator
 
@@ -45,17 +45,33 @@ English / Español. Dark green, black and white. This package includes the compl
 - Change it from Settings → Account security. Changing it invalidates existing sessions.
 - The initial account is created server-side on the first sign-in, using `BOOTSTRAP_ADMIN_PASSWORD`. Passwords are stored with PBKDF2-SHA256, unique salts and 100,000 iterations.
 
-## Local installation with Docker
+## Local execution
 
-1. Copy `.env.example` to `.env`.
-2. Set `PAYMENT_ENCRYPTION_KEY` to a random value, generated with:
-   `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
-3. Run `docker compose up --build -d`.
-4. Open `http://localhost:3000` and sign in.
+Requires Node 24 and pnpm 11.25.0. The application repository contains the code,
+assets, dependency manifests, migrations and portable test database. The local
+infrastructure directory contains `docker-compose.yml`, `.env`, Docker and Nginx
+configuration; none of those infrastructure files is maintained in this repository.
 
-Docker uses Node 24 with its built-in SQLite driver. Data persists in the `autocare_data` Docker volume. Keep the encryption key unchanged and backed up separately: existing stored Stripe keys cannot be decrypted if it is lost. Set `APP_ORIGIN` to the actual HTTPS URL when placing it behind a reverse proxy. On Hostinger VPS, forward the reverse proxy to port 3000 and provide HTTPS. Never serve the SQLite file or `.env` publicly.
+Your layout:
 
-Without Docker, use Node 24, install packages with `pnpm install --frozen-lockfile`, run `pnpm exec vite build --config standalone/vite.config.ts`, set the environment variables and run `node --experimental-strip-types standalone/server.ts`.
+| Location relative to `remoto_ssh` | Purpose |
+| --- | --- |
+| `apps/OSP_AutoCare/` | This Git repository, mounted at `/app` |
+| `docker-compose.yml` | External service configuration |
+| `nginx/default.conf` | External reverse proxy configuration |
+| `docker/` | External infrastructure assets |
+
+Use your external Compose with service `osp-autocare`, Node 24, the `/app` working
+directory and `DATABASE_PATH=/app/runtime/osp-autocare.sqlite`. Keep
+`PAYMENT_ENCRYPTION_KEY` stable and configure `BOOTSTRAP_ADMIN_PASSWORD` in your
+external environment. Set `APP_ORIGIN` to the actual browser-facing origin.
+The runtime SQLite file persists through the bind mount at
+`apps/OSP_AutoCare/runtime/osp-autocare.sqlite`.
+
+Without Docker, install packages with `pnpm install --frozen-lockfile`, build with
+`pnpm exec vite build --config standalone/vite.config.ts`, configure the application
+environment variables, and run `node --experimental-strip-types standalone/server.ts`.
+Never serve the SQLite database or environment files publicly.
 
 ## Workflow
 
@@ -115,7 +131,7 @@ The hosted review version is owner-private and may request ChatGPT sign-in befor
 
 `node --experimental-strip-types tests/integration.ts`
 
-Covers bootstrap login, bad password rejection, CRUD across required modules, isolated shops, cross-shop reference rejection, role checks, subscription gating, immediate workshop disabling, encrypted key storage, safe exports, linked-record deletion protection, mocked Stripe subscription checkout ($49.99), cross-workshop payment rejection, signed/forged webhooks and logout. Visual review covered the sign-in page and the vehicle-catalog component, including selecting a 2024 Toyota Camry and its engine/transmission/drivetrain configuration. Integration checks verified saving the new vehicle, returning its ID, and linking that ID in a work order. Authenticated browser sign-in and live Stripe / Autobooks transactions were not performed. Build validation covers the hosted and standalone frontends. Docker was prepared but not run in this environment.
+Covers bootstrap login, bad password rejection, CRUD across required modules, isolated shops, cross-shop reference rejection, role checks, subscription gating, immediate workshop disabling, encrypted key storage, safe exports, linked-record deletion protection, mocked Stripe subscription checkout ($49.99), cross-workshop payment rejection, signed/forged webhooks and logout. Visual review covered the sign-in page and the vehicle-catalog component, including selecting a 2024 Toyota Camry and its engine/transmission/drivetrain configuration. Integration checks verified saving the new vehicle, returning its ID, and linking that ID in a work order. Authenticated browser sign-in and live Stripe / Autobooks transactions were not performed. Build validation covers the hosted and standalone frontends. The external Docker infrastructure was not run in this environment.
 
 
 ## Work orders: fast vehicle intake, parts and supplier directory

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1793063685266,
+      "tag": "0000_wakeful_phantom_reporter",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1793063927599,
+      "tag": "0001_salty_roland_deschain",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793071444912,
+      "tag": "0002_omniscient_tag",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+import type {Face,View3D} from './vehicle-scene.ts';
+import type {Vec3} from './vehicle-spatial.ts';
+type SceneFace={face:Face,world:Vec3[]};
+type RenderOptions={xray:boolean,detail:boolean,tag:string,anchors:Vec3[]};
+/** Depth-tested, smoothly lit WebGL rendering; interaction/pins retain the same camera projection. */
+export function createVehicleRenderer(canvas:HTMLCanvasElement){
+ const gl=canvas.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:false});if(!gl)return null;
+ const vertex=`precision highp float;attribute vec3 p;attribute vec3 n;attribute vec4 c;attribute float m;uniform vec4 camera;uniform vec2 viewport;varying mediump vec3 normal;varying lowp vec4 color;varying lowp float material;void main(){float cy=cos(camera.x),sy=sin(camera.x),cp=cos(camera.y),sp=sin(camera.y);float x=p.x*cy-p.z*sy;float z=p.x*sy+p.z*cy;float y=(p.y-.65)*cp-z*sp;float depth=(p.y-.65)*sp+z*cp;float w=9.-depth;float scale=min(viewport.x/6.5,viewport.y/4.)*camera.z;gl_Position=vec4(x*scale*18./viewport.x,y*scale*18./viewport.y-.14*w,-depth*w/8.,w);vec3 r=vec3(n.x*cy-n.z*sy,n.y,n.x*sy+n.z*cy);normal=vec3(r.x,r.y*cp-r.z*sp,r.y*sp+r.z*cp);color=c;material=m;}`;
+ const fragment=`precision mediump float;varying mediump vec3 normal;varying lowp vec4 color;varying lowp float material;void main(){if(material<-.5){gl_FragColor=color;return;}vec3 n=normalize(normal);if(n.z<0.)n=-n;vec3 l=normalize(vec3(-.4,.8,.7));float d=max(dot(n,l),0.);vec3 h=normalize(l+vec3(0.,0.,1.));float glossy=material>.5?.62:.2;float spec=pow(max(dot(n,h),0.),material>1.5?100.:material>.5?64.:24.);float rim=pow(1.-abs(n.z),3.);vec3 lit=color.rgb*(.38+.65*d)+vec3(.65,.85,.89)*spec*glossy+vec3(.08,.15,.16)*rim;gl_FragColor=vec4(lit,color.a);}`;
+ function shader(type:number,source:string){const s=gl!.createShader(type)!;gl!.shaderSource(s,source);gl!.compileShader(s);if(!gl!.getShaderParameter(s,gl!.COMPILE_STATUS)){gl!.deleteShader(s);throw Error('3D shader unavailable: '+gl!.getShaderInfoLog(s));}return s;}
+ let program:WebGLProgram;try{program=gl.createProgram()!;const vs=shader(gl.VERTEX_SHADER,vertex),fs=shader(gl.FRAGMENT_SHADER,fragment);gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);gl.deleteShader(vs);gl.deleteShader(fs);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error('3D program unavailable');}catch{return null;}
+ const camera=gl.getUniformLocation(program,'camera'),viewport=gl.getUniformLocation(program,'viewport');const buffer=gl.createBuffer()!;let previous:SceneFace[]|null=null,previousOptions='',opaque:Float32Array=new Float32Array(),transparent:Float32Array=new Float32Array();
+ const rgb=(hex:string)=>{const n=parseInt(hex.slice(1),16);return [(n>>16)/255,((n>>8)&255)/255,(n&255)/255];};
+ function build(faces:SceneFace[],options:RenderOptions){const smoothNormals=new Map<string,number[]>(),normals:number[][]=[];const key=(tag:string,p:Vec3)=>tag+':'+p.map(v=>v.toFixed(4)).join(',');
+  faces.forEach(({face,world},i)=>{const [a,b,c]=world,u=b.map((v,k)=>v-a[k]),v=c.map((n,k)=>n-a[k]);let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];const length=Math.hypot(...n)||1;n=n.map(v=>v/length);if(['body','glass'].includes(face.kind)){const mid=world.reduce<number[]>((s,p)=>s.map((v,k)=>v+p[k]/world.length),[0,0,0]);if(n[0]*mid[0]+n[1]*(mid[1]-.7)+n[2]*mid[2]<0)n=n.map(v=>-v);for(const p of world){const id=key(face.tag,p),old=smoothNormals.get(id)||[0,0,0];smoothNormals.set(id,old.map((v,k)=>v+n[k]));}}normals[i]=n;});
+  const op:number[]=[],tr:number[]=[];
+  // Soft layered contact shadow at the ground plane.
+  if(!options.detail)for(let layer=0;layer<4;layer++){const scale=1+layer*.055;for(let i=0;i<48;i++){for(const p of [[0,.012,0],[Math.cos(i*Math.PI/24)*2.25*scale,.012,Math.sin(i*Math.PI/24)*.94*scale],[Math.cos((i+1)*Math.PI/24)*2.25*scale,.012,Math.sin((i+1)*Math.PI/24)*.94*scale]])op.push(...p,0,1,0,.015,.035,.04,.11-layer*.018,-1);}}
+  faces.forEach(({face,world},index)=>{let selected=!options.detail&&!!options.tag&&(face.tag===options.tag||options.tag==='body'&&face.kind==='body');if(selected&&['wheels','brakes','suspension'].includes(options.tag)){const c=world.reduce<number[]>((a,p)=>a.map((v,k)=>v+p[k]/world.length),[0,0,0]);selected=options.anchors.some(a=>Math.hypot(c[0]-a[0],c[2]-a[2])<.57);}
+   const alpha=options.detail||selected?1:face.kind==='body'?(options.xray?.055:1):face.kind==='glass'?(options.xray?.025:1):face.kind==='tire'?(options.xray?.15:1):1;let col=rgb(face.color);if(selected)col=col.map((v,i)=>v*.78+[.95,.69,.25][i]*.22);const target=alpha<.95?tr:op,material=face.kind==='body'?1:face.kind==='glass'?2:0;
+   for(let i=1;i<world.length-1;i++)for(const j of [0,i,i+1]){const n=smoothNormals.get(key(face.tag,world[j]))||normals[index];target.push(...world[j],...n,...col,alpha,material);}
+  });opaque=new Float32Array(op);transparent=new Float32Array(tr);
+ }
+ function draw(faces:SceneFace[],view:View3D,width:number,height:number,options:RenderOptions){
+  const opts=JSON.stringify(options);if(previous!==faces||previousOptions!==opts){build(faces,options);previous=faces;previousOptions=opts;}
+  const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);gl!.viewport(0,0,canvas.width,canvas.height);gl!.clearColor(0,0,0,0);gl!.clear(gl!.COLOR_BUFFER_BIT|gl!.DEPTH_BUFFER_BIT);gl!.enable(gl!.DEPTH_TEST);gl!.depthFunc(gl!.LEQUAL);gl!.disable(gl!.CULL_FACE);gl!.enable(gl!.BLEND);gl!.blendFunc(gl!.SRC_ALPHA,gl!.ONE_MINUS_SRC_ALPHA);gl!.useProgram(program);gl!.uniform4f(camera,view.yaw,view.pitch,view.zoom,0);gl!.uniform2f(viewport,width,height);gl!.bindBuffer(gl!.ARRAY_BUFFER,buffer);
+  for(const [name,count,offset]of [['p',3,0],['n',3,12],['c',4,24],['m',1,40]] as const){const a=gl!.getAttribLocation(program,name);gl!.enableVertexAttribArray(a);gl!.vertexAttribPointer(a,count,gl!.FLOAT,false,44,offset);}
+  gl!.depthMask(true);gl!.bufferData(gl!.ARRAY_BUFFER,opaque,gl!.STATIC_DRAW);gl!.drawArrays(gl!.TRIANGLES,0,opaque.length/11);if(transparent.length){gl!.depthMask(false);gl!.bufferData(gl!.ARRAY_BUFFER,transparent,gl!.STATIC_DRAW);gl!.drawArrays(gl!.TRIANGLES,0,transparent.length/11);}gl!.depthMask(true);
+ }
+ return {draw,dispose(){gl!.deleteBuffer(buffer);gl!.deleteProgram(program);}};
+}

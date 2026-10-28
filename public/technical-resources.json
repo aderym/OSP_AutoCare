@@ -183,7 +183,12 @@
       "es": "Información de fábrica y diagramas eléctricos para vehículos Toyota del mercado norteamericano compatibles.",
       "makes": "Toyota Lexus Scion",
       "source": "https://support.toyota.com/s/article/Where-can-I-find-Toyo-7707?language=en_US",
-      "checked": "2026-10-26"
+      "checked": "2026-10-26",
+      "brands": [
+        "Toyota",
+        "Lexus",
+        "Scion"
+      ]
     },
     {
       "id": "ford",
@@ -195,7 +200,12 @@
       "es": "Publicaciones y recursos técnicos de fábrica para vehículos de la familia Ford.",
       "makes": "Ford Lincoln Mercury",
       "source": "https://www.motorcraft.com/us/en_us/home/technical-resources.html/1000",
-      "checked": "2026-10-26"
+      "checked": "2026-10-26",
+      "brands": [
+        "Ford",
+        "Lincoln",
+        "Mercury"
+      ]
     },
     {
       "id": "honda",
@@ -207,7 +217,11 @@
       "es": "Información de servicio del fabricante, especificaciones, boletines y documentación de reparación.",
       "makes": "Honda Acura",
       "source": "https://techinfo.honda.com/rjanisis/pubs/Web/RJAAI001_LOGON_CONTENT.htm",
-      "checked": "2026-10-26"
+      "checked": "2026-10-26",
+      "brands": [
+        "Honda",
+        "Acura"
+      ]
     },
     {
       "id": "bmw",
@@ -219,7 +233,10 @@
       "es": "Información técnica del fabricante BMW. Confirme suscripción y software necesarios.",
       "makes": "BMW",
       "source": "https://bmwtechinfo.bmwgroup.com/assets/system_requirements.pdf",
-      "checked": "2026-10-26"
+      "checked": "2026-10-26",
+      "brands": [
+        "BMW"
+      ]
     },
     {
       "id": "nissan",
@@ -231,19 +248,26 @@
       "es": "Manuales, boletines y publicaciones para vehículos Nissan/INFINITI compatibles.",
       "makes": "Nissan Infiniti",
       "source": "https://www.nissan-techinfo.com/help.aspx",
-      "checked": "2026-10-26"
+      "checked": "2026-10-26",
+      "brands": [
+        "Nissan",
+        "INFINITI"
+      ]
     },
     {
       "id": "vw",
       "name": "Volkswagen erWin",
       "category": "oem",
       "access": "paid",
-      "url": "https://volkswagen.erwin-store.com/",
+      "url": "https://vw-us.erwin-store.com/erwin/showHome.do",
       "description": "Manufacturer repair and wiring information; choose the market applicable to the vehicle.",
       "es": "Información de reparación y cableado del fabricante; seleccione el mercado correspondiente al vehículo.",
       "makes": "Volkswagen",
-      "source": "https://volkswagen.erwin-store.com/erwin/showInfoTour.do",
-      "checked": "2026-10-26"
+      "source": "https://vw-us.erwin-store.com/erwin/showHome.do",
+      "checked": "2026-10-28",
+      "brands": [
+        "Volkswagen"
+      ]
     },
     {
       "id": "nastf",
@@ -352,6 +376,244 @@
       "makes": "all",
       "source": "https://www.densoautocare.com/training/",
       "checked": "2026-10-26"
+    },
+    {
+      "id": "gm",
+      "name": "GM / ACDelco Technical Delivery System",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.acdelcotds.com/subscriptions",
+      "description": "GM service-information and diagnostic subscription portal. Select the vehicle and required product.",
+      "es": "Portal de suscripciones de información de servicio y diagnóstico GM. Seleccione vehículo y producto.",
+      "makes": "Chevrolet / GMC / Buick / Cadillac / Hummer / Pontiac / Saturn / Oldsmobile",
+      "brands": [
+        "Chevrolet",
+        "GMC",
+        "Buick",
+        "Cadillac",
+        "Hummer",
+        "Pontiac",
+        "Saturn",
+        "Oldsmobile"
+      ],
+      "source": "https://www.acdelcotds.com/subscriptions",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "stellantis",
+      "name": "Stellantis Independent Operator Portal",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://stellantisiop.com/iop/app/landing",
+      "description": "Independent-operator access to Stellantis technical repair information. Confirm brand and market coverage.",
+      "es": "Acceso para talleres independientes a información técnica Stellantis. Confirme marca y mercado.",
+      "makes": "Chrysler / Dodge / Jeep / Ram / Fiat / Alfa Romeo",
+      "brands": [
+        "Chrysler",
+        "Dodge",
+        "Jeep",
+        "Ram",
+        "Fiat",
+        "Alfa Romeo"
+      ],
+      "source": "https://stellantisiop.com/iop/app/landing",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "mercedes",
+      "name": "Mercedes-Benz StarTek Info",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.startekinfo.com/",
+      "description": "Mercedes-Benz USA service and repair documentation portal for passenger and commercial vehicles.",
+      "es": "Portal Mercedes-Benz USA de documentación de servicio y reparación de vehículos de pasajeros y comerciales.",
+      "makes": "Mercedes-Benz",
+      "brands": [
+        "Mercedes-Benz"
+      ],
+      "source": "https://www.startekinfo.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "audi",
+      "name": "Audi erWin USA",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://audi-us.erwin-store.com/erwin/showHome.do",
+      "description": "Audi of America service-information portal. Registration and the applicable subscription may be required.",
+      "es": "Portal de información de servicio Audi of America. Puede requerir registro y suscripción aplicable.",
+      "makes": "Audi",
+      "brands": [
+        "Audi"
+      ],
+      "source": "https://audi-us.erwin-store.com/erwin/showHome.do",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "mazda",
+      "name": "Mazda Service Info",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.mazdaserviceinfo.com/",
+      "description": "North American workshop manuals, wiring diagrams and service bulletins through provider subscriptions.",
+      "es": "Manuales de taller, diagramas eléctricos y boletines norteamericanos mediante suscripción del proveedor.",
+      "makes": "Mazda",
+      "brands": [
+        "Mazda"
+      ],
+      "source": "https://www.mazdaserviceinfo.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "subaru",
+      "name": "Subaru Technical Information System",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://techinfo.subaru.com/stis/",
+      "description": "Subaru manufacturer technical-information portal. Check model-year coverage and subscription terms.",
+      "es": "Portal de información técnica del fabricante Subaru. Consulte años compatibles y condiciones de suscripción.",
+      "makes": "Subaru",
+      "brands": [
+        "Subaru"
+      ],
+      "source": "https://techinfo.subaru.com/stis/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "hyundai",
+      "name": "Hyundai TechInfo",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.hyundaitechinfo.com/",
+      "description": "US-market shop manuals, electrical troubleshooting manuals and technical service bulletins.",
+      "es": "Manuales de taller, diagnóstico eléctrico y boletines técnicos para Hyundai del mercado estadounidense.",
+      "makes": "Hyundai",
+      "brands": [
+        "Hyundai"
+      ],
+      "source": "https://www.hyundaitechinfo.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "kia",
+      "name": "Kia Global Information System",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://kiatechinfo.snapon.com/",
+      "description": "US-market Kia service manuals, technical bulletins, training and diagnostic-tool information.",
+      "es": "Manuales, boletines, formación e información de herramientas de diagnóstico Kia del mercado estadounidense.",
+      "makes": "Kia",
+      "brands": [
+        "Kia"
+      ],
+      "source": "https://kiatechinfo.snapon.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "genesis",
+      "name": "Genesis TechInfo",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.genesistechinfo.com/",
+      "description": "US-market Genesis shop manuals, electrical troubleshooting manuals and service bulletins.",
+      "es": "Manuales de taller, diagnóstico eléctrico y boletines Genesis del mercado estadounidense.",
+      "makes": "Genesis",
+      "brands": [
+        "Genesis"
+      ],
+      "source": "https://www.genesistechinfo.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "volvo",
+      "name": "Volvo Tech Info / VIDA",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.volvotechinfo.com/",
+      "description": "Volvo technical publications and VIDA subscription/setup information. Check the features included in each plan.",
+      "es": "Publicaciones técnicas Volvo e información de suscripción/configuración VIDA. Consulte funciones incluidas por plan.",
+      "makes": "Volvo",
+      "brands": [
+        "Volvo"
+      ],
+      "source": "https://www.volvotechinfo.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "jlr",
+      "name": "Jaguar / Land Rover TOPIx",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://topix.jlrext.com/",
+      "description": "Workshop manuals, electrical diagrams and technical bulletins through TOPIx subscriptions. Select the correct market.",
+      "es": "Manuales de taller, diagramas eléctricos y boletines mediante suscripción TOPIx. Seleccione el mercado correcto.",
+      "makes": "Jaguar / Land Rover",
+      "brands": [
+        "Jaguar",
+        "Land Rover"
+      ],
+      "source": "https://topix.jlrext.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "porsche",
+      "name": "Porsche Technical Service Information",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://pcss-tsi.porsche.com/landing/static/start/general?country=US",
+      "description": "Porsche technical-service information entry point for independent repairers. Confirm access and market requirements.",
+      "es": "Portal de información técnica Porsche para talleres independientes. Confirme requisitos de acceso y mercado.",
+      "makes": "Porsche",
+      "brands": [
+        "Porsche"
+      ],
+      "source": "https://pcss-tsi.porsche.com/landing/static/start/general?country=US",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "tesla",
+      "name": "Tesla Service Information",
+      "category": "oem",
+      "access": "mixed",
+      "url": "https://service.tesla.com/",
+      "description": "Service manuals, wiring diagrams, parts catalogs and DIY information. Diagnostic services have separate access terms.",
+      "es": "Manuales, diagramas eléctricos, catálogos de partes y guías DIY. Los servicios de diagnóstico tienen acceso separado.",
+      "makes": "Tesla",
+      "brands": [
+        "Tesla"
+      ],
+      "source": "https://service.tesla.com/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "mini",
+      "name": "MINI TechInfo",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.minitechinfo.com/tisUI/",
+      "description": "MINI technical-information portal. Confirm subscription, software requirements and vehicle coverage.",
+      "es": "Portal de información técnica MINI. Confirme suscripción, requisitos de software y vehículos compatibles.",
+      "makes": "MINI",
+      "brands": [
+        "MINI"
+      ],
+      "source": "https://www.minitechinfo.com/tisUI/",
+      "checked": "2026-10-28"
+    },
+    {
+      "id": "mitsubishi",
+      "name": "Mitsubishi Motors TechInfo",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://www.mitsubishitechinfo.com/epacarb/home.jsp",
+      "description": "Manufacturer service manuals, technical bulletins and training materials for supported North American vehicles.",
+      "es": "Manuales del fabricante, boletines y formación para vehículos norteamericanos compatibles.",
+      "makes": "Mitsubishi",
+      "brands": [
+        "Mitsubishi"
+      ],
+      "source": "https://www.mitsubishitechinfo.com/epacarb/home.jsp",
+      "checked": "2026-10-28"
     }
   ]
 }

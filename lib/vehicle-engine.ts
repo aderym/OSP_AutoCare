@@ -3,8 +3,9 @@ import type {Vec3} from './vehicle-spatial.ts';
 /** Original illustrative inline-four turbo assembly, not an OEM engine CAD file. */
 export function engineAssembly(m:MeshBuilder,origin:Vec3=[-1.28,.66,0]){
  const {box,roundedBox,cylinder,tube,lathe}=m,p=(x:number,y:number,z:number):Vec3=>[origin[0]+x,origin[1]+y,origin[2]+z],tag='engine';
- roundedBox(p(0,-.04,0),[.75,.4,.51],.035,'#87969c',tag);roundedBox(p(0,-.31,0),[.66,.15,.45],.03,'#3d515c',tag);
- for(let i=0;i<7;i++)box(p(-.3+i*.1,-.385,0),[.026,.025,.43],'#74868c',tag);
+ roundedBox(p(0,-.04,0),[.75,.4,.51],.035,'#87969c',tag);roundedBox(p(0,-.31,0),[.66,.15,.45],.03,'#6c8c9b','oilPan');
+ for(let i=0;i<7;i++)box(p(-.3+i*.1,-.385,0),[.026,.025,.43],'#b1c2c9','oilPan');
+ cylinder(p(.2,-.405,.12),.022,.025,'#d3d3bc','oilPan','y',6);
  roundedBox(p(0,.21,0),[.83,.12,.57],.035,'#c2ccd0',tag);roundedBox(p(0,.31,0),[.78,.12,.5],.04,'#263e49',tag);roundedBox(p(0,.385,0),[.69,.028,.33],.01,'#405b65',tag);
  for(let i=0;i<4;i++){const x=-.29+i*.19;roundedBox(p(x,.42,0),[.105,.075,.12],.02,'#192a33',tag);box(p(x,.46,.025),[.06,.025,.07],'#d7a563',tag);cylinder(p(x,.29,-.27),.025,.05,'#bdc6c4',tag,'z',8);tube([p(x,.18,-.26),p(x,.32,-.35),p(x+.025,.35,-.48),p(x+.025,.1,-.51)],.046,'#a9b8bd',tag,8);tube([p(x,.16,.26),p(x,.05,.39),p(-.05,-.08,.46)],.029,'#ad8f73',tag,7);}
  for(let j=0;j<3;j++){tube([p(-.34+j*.026,.46,-.1),p(.28,.46,-.1),p(.39,.34,-.2)],.007,j===0?'#b19e63':'#152c35',tag,5);}
@@ -28,8 +29,8 @@ export function alternatorAssembly(m:MeshBuilder,c:Vec3=[0,0,0],tag='alternator'
  for(let i=0;i<12;i++){const a=i*Math.PI/6;box(p(0,Math.cos(a)*.143,Math.sin(a)*.143),[.15,.023,.026],'#263d47',tag);}
  for(const y of [-.16,.16]){box(p(.04,y,0),[.13,.065,.08],'#9baeb4',tag);cylinder(p(.04,y,0),.023,.09,'#263a44',tag,'z',8);}
 }
-export function brakeAssembly(m:MeshBuilder,c:Vec3=[0,0,0],tag='brakes'){
- const {cylinder,lathe,box}=m;lathe(c,[[-.03,.07],[-.03,.255],[.03,.255],[.03,.07],[-.03,.07]],'#b7c1c5',tag,'z',28);cylinder([c[0],c[1],c[2]-.04],.11,.11,'#6b7f8b',tag,'z',16);
- for(let i=0;i<16;i++){const a=i*Math.PI/8;for(const r of [.18,.22])cylinder([c[0]+Math.cos(a)*r,c[1]+Math.sin(a)*r,c[2]+.032],.007,.002,'#334954',tag,'z',6);}
+export function brakeAssembly(m:MeshBuilder,c:Vec3=[0,0,0],tag='brakes',detailed=true){
+ const {cylinder,lathe,box}=m;lathe(c,[[-.03,.07],[-.03,.255],[.03,.255],[.03,.07],[-.03,.07]],'#b7c1c5',tag,'z',detailed?28:20);cylinder([c[0],c[1],c[2]-.04],.11,.11,'#6b7f8b',tag,'z',16);
+ for(let i=0;i<(detailed?16:8);i++){const a=i*Math.PI*2/(detailed?16:8);for(const r of [.18,.22])cylinder([c[0]+Math.cos(a)*r,c[1]+Math.sin(a)*r,c[2]+.032],.007,.002,'#334954',tag,'z',6);}
  box([c[0]+.21,c[1]+.035,c[2]+.01],[.13,.29,.13],'#c95e45',tag);box([c[0]+.215,c[1]+.04,c[2]+.082],[.075,.18,.015],'#df9b6a',tag);for(const y of [-.085,.14])cylinder([c[0]+.215,c[1]+y,c[2]+.092],.012,.012,'#d7d9cf',tag,'z',6);
 }

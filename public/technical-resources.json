@@ -55,7 +55,7 @@
   "resources": [
     {
       "id": "carcarekiosk",
-      "name": "CarCareKiosk",
+      "name": "CarCareKiosk Videos",
       "category": "videos",
       "access": "free",
       "url": "https://www.carcarekiosk.com/",

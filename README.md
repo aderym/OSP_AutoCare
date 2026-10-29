@@ -245,3 +245,11 @@ The Web App Manifest defines the stable root identity, root scope/start URL, sta
 Service worker registration runs only in a secure top-level context. It caches only the public offline explanation: API requests, authentication, business records and ordinary page responses are never cached by this worker. Internet remains required for account access, data, billing and AI. Offline navigation shows a bilingual retry page.
 
 Validation: TypeScript, standalone build and install-app tests passed. Tests cover device detection, dismissal expiry, manifest dimensions, and worker network/private-data exclusions. Managed-browser review verified automatic invitation, language changes, manifest/Apple links, dialog opening/Escape/reopening and the postponement interaction. The HTTP preview cannot exercise HTTPS-only native installation; physical Android/iOS installation and OS shortcuts were not executed in this environment.
+
+### Dark default, navigation and operational review
+
+Dark is now the initial theme. The versioned `osp_theme_v2` preference starts existing installations in dark once and remembers subsequent light/dark choices. Server-rendered and standalone HTML also start dark. The shared workshop navigation has stronger icons/text, distinct selected rows for both themes, labelled groups, current-page semantics, visible keyboard focus and scrolling for short screens. The mobile button announces its expanded state and Escape closes its menu.
+
+The review fixed invalid work-order tax rates and partial employee edits: employee identity/password/session changes now run atomically after validation. Integration tests cover invalid passwords and duplicate usernames leaving prior data/sessions untouched. All three test suites and TypeScript passed. Browser review used the actual shared navigation with labelled demonstration data; screenshots are in `docs/navigation-dark.jpg` and `docs/navigation-light.jpg`.
+
+See `docs/operational-review.md` for tested areas, verification limits and prioritized remaining product needs (customer payments/balances, inventory movements, restore/recovery, account recovery/audit, live-provider acceptance and exact licensed vehicle data).

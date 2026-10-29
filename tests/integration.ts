@@ -70,6 +70,15 @@ assert.equal((await call('records',{table:'workorders',data:{title:'Invalid pric
 const foreignSupplier=await call('records',{table:'suppliers',data:{name:'Workshop B supplier'}},lb.cookie);assert.equal((await call('records',{table:'workorders',data:{title:'Foreign supplier',lineItems:[{...lines[0],supplierId:foreignSupplier.data.id}]}},la.cookie)).status,400);
 const library=JSON.parse(fs.readFileSync('public/parts-catalog.json','utf8'));assert.equal(library.parts.length,284);assert.equal(library.suppliers.length,20);assert(library.suppliers.every((s:any)=>s.url.startsWith('https://')));
 await call('users',{name:'QA Employee',username:'qa-staff',password:'testing123'},la.cookie);const staff=await call('login',{username:'qa-staff',password:'testing123'});
+// Invalid employee edits must leave both profile and active session untouched.
+const qaStaff=(await call('users',null,la.cookie)).data.find((x:any)=>x.username==='qa-staff');
+assert.equal((await call('users',{id:qaStaff.id,name:'SHOULD NOT SAVE',username:'qa-staff',password:'123',active:false},la.cookie)).status,400);
+assert.equal((await call('users',null,la.cookie)).data.find((x:any)=>x.id===qaStaff.id).name,'QA Employee');
+assert.equal((await call('me',null,staff.cookie)).status,200);
+assert.equal((await call('users',{id:qaStaff.id,name:'DUPLICATE SHOULD NOT SAVE',username:'qa-a',active:false},la.cookie)).status,400);
+assert.equal((await call('users',null,la.cookie)).data.find((x:any)=>x.id===qaStaff.id).name,'QA Employee');
+assert.equal((await call('me',null,staff.cookie)).status,200);
+for(const tax of [-1,101,'invalid'])assert.equal((await call('records',{table:'workorders',data:{title:'Invalid invoice tax',tax}},la.cookie)).status,400);
 assert.equal((await call('users',null,staff.cookie)).status,400);assert.equal((await call('payment-settings',{publicKey:'pk_test_dummy'},staff.cookie)).status,400);assert.equal((await call('shops',{name:'Bad',username:'bad',password:'testing123'},la.cookie)).status,400);
 assert.equal((await call('records',null,staff.cookie,'','&table=workorders')).status,200);
 const technical={dtcs:'P0300',complaint:'Intermittent rough idle',tests:'Recorded test results',measurements:'12 V input',referenceUrl:'https://example.com/oem',checklist:{identity:true,baseline:true}};

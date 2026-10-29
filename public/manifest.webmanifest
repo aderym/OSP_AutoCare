@@ -1,0 +1,17 @@
+{
+  "id": "/",
+  "name": "OSP AutoCare",
+  "short_name": "OSP AutoCare",
+  "description": "Mechanical, body and paint workshop management / Gestión de taller mecánico y pintura",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0c2724",
+  "theme_color": "#154e3e",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

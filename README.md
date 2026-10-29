@@ -235,3 +235,13 @@ Validation: TypeScript and local API integration suite passed, including identit
 ### Horizontal OSP logo
 
 The owner-supplied horizontal OSP AutoCare artwork is used for the login, platform sidebar, loading screen and OSP invoice badge. The transparent WebP keeps the full 3:1 layout with responsive sizing; the original JPEG is retained alongside it. Independent business logos remain on their workshop invoices. Existing compact transparent favicons are retained for legibility. Visual login review and the production build verify the replacement.
+
+### Install OSP AutoCare on a device (PWA)
+
+A bilingual **Install app / Instalar app** button is available before and after login. An automatic in-page invitation appears after a short delay, unless the app is running standalone or the user dismissed it within seven days. iPhone/iPad (including iPad desktop-style agents), Android, Mac and PC guidance is selected locally. When the browser supplies `beforeinstallprompt`, the user can open its native confirmation from the install dialog. `appinstalled` and standalone display changes hide the invitation. Embedded previews direct users to the full app in their browser; no browser notification permission is requested.
+
+The Web App Manifest defines the stable root identity, root scope/start URL, standalone display and owner-supplied square OSP icon at 192/512 pixels, plus a maskable icon and 180-pixel Apple icon. Both hosted and standalone HTML link the manifest; the standalone server serves the proper MIME type and revalidates the manifest/service worker. The horizontal program logo remains in the application. This is browser installation to the home screen/desktop, not a downloadable signed APK or an app-store listing. Browser/OS support determines the final installation or shortcut experience. Reference: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable
+
+Service worker registration runs only in a secure top-level context. It caches only the public offline explanation: API requests, authentication, business records and ordinary page responses are never cached by this worker. Internet remains required for account access, data, billing and AI. Offline navigation shows a bilingual retry page.
+
+Validation: TypeScript, standalone build and install-app tests passed. Tests cover device detection, dismissal expiry, manifest dimensions, and worker network/private-data exclusions. Managed-browser review verified automatic invitation, language changes, manifest/Apple links, dialog opening/Escape/reopening and the postponement interaction. The HTTP preview cannot exercise HTTPS-only native installation; physical Android/iOS installation and OS shortcuts were not executed in this environment.

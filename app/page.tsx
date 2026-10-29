@@ -1,5 +1,6 @@
 'use client';
 import React,{useState,useEffect} from 'react';
+import InstallApp from './components/InstallApp';
 import PasswordInput from './components/PasswordInput';
 import WorkshopSignup from './components/WorkshopSignup';
 import BusinessIdentityFields from './components/BusinessIdentityFields';
@@ -24,7 +25,8 @@ const commonMakes=['Acura','Alfa Romeo','Aston Martin','Audi','Bentley','BMW','B
 const dict:any={'New':'Nueva','Used':'Usada','Repair':'A reparar','Remanufactured':'Remanufacturada','Draft':'Borrador','Approved':'Aprobado','In progress':'En proceso','Paint booth':'Cabina de pintura','Quality check':'Control de calidad','Completed':'Completado','Delivered':'Entregado','Mechanical':'Mecánica','Body & paint':'Carrocería y pintura','Maintenance':'Mantenimiento','Electrical':'Eléctrico','Diagnostics':'Diagnóstico','Parts':'Repuestos','Materials':'Materiales','Other':'Otro','Ordered':'Pedido','Received':'Recibido','Cancelled':'Cancelado'};
 const money=(n:any)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n)||0);
 const total=orderTotal;
-export default function App(){
+export default function App(){return <><InstallApp/><WorkshopApp/></>;}
+function WorkshopApp(){
 const [logoReading,setLogoReading]=useState(false),[signup,setSignup]=useState(false),[embedded,setEmbedded]=useState(false);
 useEffect(()=>{setEmbedded(window.self!==window.top);},[]);
 const [lang,setLang]=useState(0),[me,setMe]=useState<any>(null),[ready,setReady]=useState(false),[page,setPage]=useState('dashboard'),[shop,setShop]=useState(()=>typeof window!=='undefined'?localStorage.getItem('osp_shop')||'':''),[data,setData]=useState<any>({}),[query,setQuery]=useState(''),[modal,setModal]=useState<any>(null),[form,setForm]=useState<any>({}),[busy,setBusy]=useState(false),[toast,setToast]=useState(''),[error,setError]=useState(''),[nav,setNav]=useState(false),[makes,setMakes]=useState(commonMakes),[models,setModels]=useState<string[]>([]),[view,setView]=useState('board'),[vehicleDraft,setVehicleDraft]=useState<any>(null),[partsCatalog,setPartsCatalog]=useState<any>({parts:[],suppliers:[],categories:[]}),[techContext,setTechContext]=useState<any>({}),[workbenchOverlay,setWorkbenchOverlay]=useState(false),[techOverlay,setTechOverlay]=useState(false),[techDirty,setTechDirty]=useState(false),[theme,setTheme]=useState(()=>typeof window!=='undefined'?localStorage.getItem('osp_theme')||'light':'light');
@@ -38,7 +40,7 @@ async function load(selectedShop=shop,requireSession=false){try{const m=await ap
 useEffect(()=>{setLang(Number(localStorage.getItem('osp_language'))||0);load();},[shop]);
 useEffect(()=>{fetch('/vehicle-makes.json').then(r=>r.json()).then((d:any)=>setMakes([...new Set<string>([...commonMakes,...d.makes])].sort())).catch(()=>{});},[]);
 useEffect(()=>{localStorage.setItem('osp_shop',shop);},[shop]);
-useEffect(()=>{localStorage.setItem('osp_language',String(lang));document.documentElement.lang=lang?'es':'en';},[lang]);
+useEffect(()=>{localStorage.setItem('osp_language',String(lang));document.documentElement.lang=lang?'es':'en';window.dispatchEvent(new CustomEvent('osp-language',{detail:lang}));},[lang]);
 useEffect(()=>{if(!me||root||!me.access||!me.accessUntil)return;const remaining=me.accessUntil-Date.now();const timer=setTimeout(()=>{setData({});setModal(null);load();},Math.max(0,Math.min(remaining+100,2147483647)));return()=>clearTimeout(timer);},[me?.accessUntil,me?.access,root]);
 useEffect(()=>{if(!me)return;const p=new URLSearchParams(location.search);if(p.get('session_id')){api('verify-payment',{session:p.get('session_id')}).then(()=>{history.replaceState({},'',location.pathname);msg(t('Subscription activated','Suscripción activada'));load();}).catch(e=>setError(e.message));}},[me?.user.id]);
 async function run(fn:()=>Promise<any>){setBusy(true);setError('');try{await fn();}catch(e:any){setError(e.message);}finally{setBusy(false);}}

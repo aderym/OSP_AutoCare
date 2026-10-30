@@ -66,3 +66,14 @@ privados se mantienen fuera del acceso HTTP.
 Incluye código, recursos, catálogos, migraciones, base inicial sanitizada, instrucciones
 y compilación. Excluye contraseñas reales, sesiones, claves API, datos de ejecución,
 `.git` y `node_modules` (las dependencias se instalan con el lockfile).
+
+## IA con foto y voz
+
+La imagen Docker incluye todo `lib/` y compila los controles de foto/voz. Configure
+la clave OpenAI en Configuración de OSP; no se incorpora a la imagen ni a Git.
+El modelo de transcripción se configura por separado (predeterminado `gpt-transcribe`).
+Sirva el dominio con HTTPS para que el navegador permita usar el micrófono.
+Las preguntas transcritas reciben lectura automática de la respuesta; también hay
+un botón Escuchar si el navegador bloquea reproducción automática. El audio de
+salida utiliza las voces del dispositivo. Después de actualizar, reconstruya la
+imagen y vuelva a crear el servicio conservando el volumen de datos.

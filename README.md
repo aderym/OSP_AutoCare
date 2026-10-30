@@ -1,8 +1,12 @@
+## Entrega completa actualizada
+
+El repositorio incluye ahora `deployment/` con Dockerfile, Compose, plantilla de entorno e instrucciones independientes. El Dockerfile copia todos los módulos actuales de `lib/`, recursos y catálogos; la infraestructura externa existente no se reemplaza. Consulte [deployment/README.md](deployment/README.md). La base inicial es una captura sanitizada con fecha propia; los datos de ejecución no se sincronizan con Git.
+
 # OSP AutoCare — Mechanical, body & paint workshop management
 
 ## Copia del Site para el entorno de pruebas
 
-El código de esta copia coincide con la versión 8 del Site. La base portable está
+El código incluye las actualizaciones del proyecto hasta el 30 de octubre de 2026. La base portable está
 en `data/snapshots/osp-autocare.sqlite`: es una copia de los registros actuales de
 D1, con el perfil completo del taller y su logo, usuarios y biblioteca técnica.
 `data/snapshots/osp-autocare.json` indica la fecha de captura, los conteos y SHA-256.

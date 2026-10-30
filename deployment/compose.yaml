@@ -1,0 +1,17 @@
+services:
+  osp-autocare:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    ports:
+      - "127.0.0.1:${OSP_PORT:-3000}:3000"
+    environment:
+      APP_ORIGIN: ${APP_ORIGIN:?Set APP_ORIGIN in deployment/.env}
+      BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:?Set BOOTSTRAP_ADMIN_PASSWORD}
+      PAYMENT_ENCRYPTION_KEY: ${PAYMENT_ENCRYPTION_KEY:?Set a stable PAYMENT_ENCRYPTION_KEY}
+      DATABASE_PATH: /app/runtime/osp-autocare.sqlite
+    volumes:
+      - osp_autocare_data:/app/runtime
+    restart: unless-stopped
+volumes:
+  osp_autocare_data:

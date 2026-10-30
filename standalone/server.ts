@@ -2,10 +2,11 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import {api} from '../lib/api.ts';
-import {database} from './database.ts';
+import {database,initializeSnapshotOwner} from './database.ts';
 const DB=database(process.env.DATABASE_PATH||'runtime/osp-autocare.sqlite');
 if(!process.env.PAYMENT_ENCRYPTION_KEY)throw Error('Set PAYMENT_ENCRYPTION_KEY to a random secret. Keep it for future restarts.');
 const env={DB,OPENAI_API_KEY:process.env.OPENAI_API_KEY,PAYMENT_ENCRYPTION_KEY:process.env.PAYMENT_ENCRYPTION_KEY,BOOTSTRAP_ADMIN_PASSWORD:process.env.BOOTSTRAP_ADMIN_PASSWORD||'101010'};
+initializeSnapshotOwner(DB,env.BOOTSTRAP_ADMIN_PASSWORD);
 const mime:any={'.webmanifest':'application/manifest+json','.webp':'image/webp','.jpeg':'image/jpeg','.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon'};
 http.createServer(async(req,res)=>{try{const proto=process.env.APP_ORIGIN?.startsWith('https:')?'https':'http';const base=process.env.APP_ORIGIN||`${proto}://${req.headers.host}`;const url=new URL(req.url||'/',base);
 if(url.pathname.startsWith('/api/')){const chunks=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>1500000){res.writeHead(413);res.end('Too large');return;}chunks.push(chunk);}const headers=new Headers();for(const [k,v]of Object.entries(req.headers))if(v)headers.set(k,Array.isArray(v)?v.join(','):v);const body=Buffer.concat(chunks);const r=await api(new Request(url,{method:req.method,headers,body:['GET','HEAD'].includes(req.method||'GET')?undefined:body}),env);res.writeHead(r.status,Object.fromEntries(r.headers));res.end(Buffer.from(await r.arrayBuffer()));return;}

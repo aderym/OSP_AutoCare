@@ -6,13 +6,14 @@ import {partPlacement} from '../lib/vehicle-spatial.ts';
 import {buildVehicleScene,project3D} from '../lib/vehicle-scene.ts';
 import {inferBodyType,locatePart} from '../lib/vehicle-map.ts';
 import {convertUnit,ohmsLaw,mixVolumes,resourceSearch} from '../lib/technician.ts';
+const testAdminPassword=crypto.randomUUID();
 const testfile='/tmp/osp-autocare-test-'+crypto.randomUUID()+'.sqlite';
-const DB=database(testfile);const env={DB,BOOTSTRAP_ADMIN_PASSWORD:'101010',PAYMENT_ENCRYPTION_KEY:crypto.randomUUID()};
+const DB=database(testfile);const env={DB,BOOTSTRAP_ADMIN_PASSWORD:testAdminPassword,PAYMENT_ENCRYPTION_KEY:crypto.randomUUID()};
 async function call(action:string,body:any=null,cookie='',shop='',extra=''){const r=await api(new Request('http://localhost/api/'+action+'?shop='+shop+extra,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',cookie,origin:'http://localhost'},body:body?JSON.stringify(body):undefined}),env);return {status:r.status,data:await r.json() as any,cookie:r.headers.get('set-cookie')?.split(';')[0]||''};}
-const login=await call('login',{username:'osp',password:'101010'});assert.equal(login.status,200);const root=login.cookie;
-const embeddedLogin=await api(new Request('https://app.example/api/login',{method:'POST',headers:{'Content-Type':'application/json',origin:'https://app.example'},body:JSON.stringify({username:'osp',password:'101010',embedded:true})}),env);assert.equal(embeddedLogin.status,200);const embeddedCookie=embeddedLogin.headers.get('set-cookie')||'';assert(embeddedCookie.includes('SameSite=None')&&embeddedCookie.includes('Secure')&&embeddedCookie.includes('Partitioned')&&embeddedCookie.includes('HttpOnly'));assert((login.cookie||'').startsWith('osp_session='));
+const login=await call('login',{username:'osp',password:testAdminPassword});assert.equal(login.status,200);const root=login.cookie;
+const embeddedLogin=await api(new Request('https://app.example/api/login',{method:'POST',headers:{'Content-Type':'application/json',origin:'https://app.example'},body:JSON.stringify({username:'osp',password:testAdminPassword,embedded:true})}),env);assert.equal(embeddedLogin.status,200);const embeddedCookie=embeddedLogin.headers.get('set-cookie')||'';assert(embeddedCookie.includes('SameSite=None')&&embeddedCookie.includes('Secure')&&embeddedCookie.includes('Partitioned')&&embeddedCookie.includes('HttpOnly'));assert((login.cookie||'').startsWith('osp_session='));
 const embeddedLogout=await api(new Request('https://app.example/api/logout',{method:'POST',headers:{'Content-Type':'application/json',cookie:embeddedCookie.split(';')[0],origin:'https://app.example'},body:JSON.stringify({embedded:true})}),env);assert.equal(embeddedLogout.status,200);assert(embeddedLogout.headers.get('set-cookie')?.includes('Partitioned'));assert(embeddedLogout.headers.get('set-cookie')?.includes('Max-Age=0'));
-const forbiddenOrigin=await api(new Request('https://app.example/api/login',{method:'POST',headers:{'Content-Type':'application/json',origin:'https://other.example'},body:JSON.stringify({username:'osp',password:'101010',embedded:true})}),env);assert.equal(forbiddenOrigin.status,403,'embedded cookies never bypass origin validation');
+const forbiddenOrigin=await api(new Request('https://app.example/api/login',{method:'POST',headers:{'Content-Type':'application/json',origin:'https://other.example'},body:JSON.stringify({username:'osp',password:testAdminPassword,embedded:true})}),env);assert.equal(forbiddenOrigin.status,403,'embedded cookies never bypass origin validation');
 
 assert.equal((await call('login',{username:'osp',password:'wrong'})).status,401);
 assert.equal((await call('records',null,'','','&table=customers')).status,401);
@@ -58,6 +59,24 @@ await call('records',{table:'vehicles',data:{make:'Toyota',model:'Camry',year:20
 assert.equal((await call('records',{table:'customers',id:customersA.data[0].id,delete:true},la.cookie)).status,400,'linked customer cannot be removed');
 for(const table of ['suppliers','inventory','workorders','services','purchases','diagrams']){const saved=await call('records',{table,data:{name:'QA '+table,title:'QA '+table,quantity:2,cost:10,labor:100,parts:50,tax:6}},la.cookie);assert.equal(saved.status,200,table);assert.equal((await call('records',null,la.cookie,'','&table='+table)).data.length,1);}
 const newVehicle=await call('records',{table:'vehicles',data:{make:'Toyota',model:'Camry',year:2024,customer:customersA.data[0].id,engine:'2.5 L / 4 cyl',epaId:'47123'}},la.cookie);assert.equal(newVehicle.status,200);assert.equal(typeof newVehicle.data.id,'string');
+// Full intake creates customer and linked vehicles atomically in the current workshop.
+const intake=await call('records',{table:'customers',data:{name:'Complete intake QA',company:'Example LLC',phone:'0000000000',city:'Test City',postalCode:'00000'},vehicles:[{year:2026,make:'Toyota',model:'Camry',plate:'QA-A',customer:'forged-other-shop',id:'forged-id'},{year:2025,make:'Ford',model:'F-150',mileage:1000}]},la.cookie);
+assert.equal(intake.status,200);assert.equal(intake.data.vehicles.length,2);assert(intake.data.vehicles.every((v:any)=>v.customer===intake.data.id&&v.id!=='forged-id'));
+const allIntakeVehicles=(await call('records',null,la.cookie,'','&table=vehicles')).data;assert.equal(allIntakeVehicles.filter((v:any)=>v.customer===intake.data.id).length,2);
+assert(!(await call('records',null,lb.cookie,'','&table=customers')).data.some((r:any)=>r.id===intake.data.id),'intake remains tenant-scoped');
+const intakeOrder=await call('records',{table:'workorders',data:{title:'Intake QA order',customer:intake.data.id,vehicle:intake.data.vehicles[0].id,status:'Draft'}},la.cookie);assert.equal(intakeOrder.status,200);
+assert.equal((await call('records',{table:'workorders',data:{title:'Wrong owner',customer:customersA.data[0].id,vehicle:intake.data.vehicles[0].id}},la.cookie)).status,400,'customer/vehicle mismatch rejected');
+const beforeInvalid=(await call('records',null,la.cookie,'','&table=customers')).data.length;
+assert.equal((await call('records',{table:'customers',data:{name:'Invalid intake'},vehicles:[{year:2026,make:'Toyota',model:'Camry'},{year:2026,make:'Ford'}]},la.cookie)).status,400);
+assert.equal((await call('records',null,la.cookie,'','&table=customers')).data.length,beforeInvalid,'invalid vehicle leaves no partial customer');
+assert.equal((await call('records',{table:'customers',id:intake.data.id,data:{name:'Tenant attack'},vehicles:[]},lb.cookie)).status,400,'cannot update another workshop intake');
+DB.sqlite.exec("CREATE TRIGGER qa_intake_failure BEFORE INSERT ON vehicles WHEN json_extract(NEW.data,'$.plate')='FAIL-INTAKE' BEGIN SELECT RAISE(ABORT,'simulated intake failure'); END");
+assert.equal((await call('records',{table:'customers',data:{name:'Rollback QA'},vehicles:[{year:2026,make:'Toyota',model:'Camry',plate:'FAIL-INTAKE'}]},la.cookie)).status,400);
+DB.sqlite.exec('DROP TRIGGER qa_intake_failure');
+assert.equal((await call('records',null,la.cookie,'','&table=customers')).data.length,beforeInvalid,'database failure rolls back customer and vehicles');
+await call('records',{table:'workorders',id:intakeOrder.data.id,delete:true},la.cookie);for(const v of intake.data.vehicles)await call('records',{table:'vehicles',id:v.id,delete:true},la.cookie);await call('records',{table:'customers',id:intake.data.id,delete:true},la.cookie);
+
+
 const linkedOrder=await call('records',{table:'workorders',data:{title:'New catalog vehicle order',customer:customersA.data[0].id,vehicle:newVehicle.data.id,status:'Draft'}},la.cookie);assert.equal(linkedOrder.status,200);assert.equal(typeof linkedOrder.data.id,'string');
 const savedOrders=await call('records',null,la.cookie,'','&table=workorders');assert.equal(savedOrders.data.find((r:any)=>r.id===linkedOrder.data.id).vehicle,newVehicle.data.id);
 const localIndex=JSON.parse(fs.readFileSync('public/vehicle-catalog/index.json','utf8'));assert(localIndex.records>50000);for(const [year,make,model]of [['2024','toyota','Camry'],['2022','ford','F150 Pickup 2WD'],['2020','bmw','330i'],['1990','honda','Accord']]){const local=JSON.parse(fs.readFileSync('public/vehicle-catalog/'+year+'.json','utf8'));assert(local[make].models[model].length>0,'catalog must contain '+year+' '+make+' '+model);}

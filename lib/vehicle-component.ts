@@ -5,6 +5,8 @@ import type {BodyType} from './vehicle-map.ts';
 import type {Vec3} from './vehicle-spatial.ts';
 import {universalJoint,cvHalfShaft,driveShaft,differentialAssembly,type DriveLayout} from './vehicle-underbody.ts';
 export const inspectableComponents=[
+ {tag:'windshield',name:'Windshield and cowl',es:'Parabrisas y vierteaguas',part:'Windshield',at:[-.55,1.3,0]},
+ {tag:'rearLamps',name:'Rear lighting',es:'Luces traseras',part:'Taillight assembly',at:[2.2,.8,.65]},
  {tag:'engine',name:'Complete engine assembly',es:'Conjunto completo del motor',part:'Engine assembly',at:[-1.28,1.08,0]},
  {tag:'driveMotor',name:'Electric drive motor',es:'Motor de propulsión eléctrica',part:'Electric drive motor',at:[-1.2,.85,0]},
  {tag:'radiator',name:'Radiator',es:'Radiador',part:'Radiator',at:[-2,.84,0]},

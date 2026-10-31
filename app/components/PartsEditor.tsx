@@ -1,12 +1,13 @@
 'use client';
+import {filterParts} from '../../lib/parts-search';
 import {useState} from 'react';
 import {Plus,Trash2,ExternalLink,Package} from 'lucide-react';
 const currency=(n:any)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n)||0);
 export default function PartsEditor({lines,onChange,catalog,suppliers,inventory,lang}:{lines:any[],onChange:(v:any[])=>void,catalog:any,suppliers:any[],inventory:any[],lang:number}){
 const t=(a:string,b:string)=>lang?b:a;const [query,setQuery]=useState(''),[category,setCategory]=useState(''),[custom,setCustom]=useState(false),[draft,setDraft]=useState<any>({name:'',condition:'New',quantity:1,unitPrice:0}),[error,setError]=useState('');
 const terms:any={New:'Nueva',Used:'Usada',Repair:'A reparar',Remanufactured:'Remanufacturada',Paint:'Pintura'};
-const parts=(catalog.parts||[]).filter((r:any)=>(!category||r.category===category)&&(!query||(r.name+' '+r.es).toLowerCase().includes(query.toLowerCase())));
-function selectPart(id:string){if(id.startsWith('stock:')){const r=inventory.find(r=>'stock:'+r.id===id);if(r)setDraft({...draft,name:r.name,partEs:r.name,partNumber:r.sku||'',unitPrice:Number(r.price)||0,inventoryId:r.id,catalogId:''});}else{const r=catalog.parts?.find((r:any)=>r.id===id);if(r)setDraft({...draft,name:r.name,partEs:r.es,catalogId:r.id,inventoryId:'',partNumber:''});}}
+const parts=filterParts(catalog.parts||[],query,category);
+function selectPart(id:string){if(id.startsWith('stock:')){const r=inventory.find(r=>'stock:'+r.id===id);if(r)setDraft({...draft,name:r.name,partEs:r.name,partNumber:r.sku||'',unitPrice:Number(r.price)||0,inventoryId:r.id,catalogId:''});}else{const r=catalog.parts?.find((r:any)=>r.id===id);if(r)setDraft({...draft,name:r.name,partEs:r.es,catalogId:r.id,inventoryId:'',partNumber:'',condition:r.kind==='operation'?'Repair':'New'});}}
 function selectSupplier(id:string){if(id.startsWith('saved:')){const r=suppliers.find(r=>'saved:'+r.id===id);setDraft({...draft,supplierId:r?.id||'',directoryId:'',supplierName:r?.name||'',supplierUrl:r?.url||''});}else{const r=catalog.suppliers?.find((r:any)=>r.id===id);setDraft({...draft,supplierId:'',directoryId:r?.id||'',supplierName:r?.name||'',supplierUrl:r?.url||''});}}
 function add(){if(!draft.name.trim()){setError(t('Select a part or enter its name.','Seleccione una parte o escriba su nombre.'));return;}if(!(Number(draft.quantity)>0)||Number(draft.unitPrice)<0){setError(t('Check quantity and price.','Revise cantidad y precio.'));return;}onChange([...lines,{...draft,id:crypto.randomUUID?.()||'line-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),quantity:Number(draft.quantity),unitPrice:Number(draft.unitPrice)}]);setDraft({name:'',condition:'New',quantity:1,unitPrice:0});setError('');}
 const selectedSupplier=draft.supplierId?'saved:'+draft.supplierId:draft.directoryId||'';

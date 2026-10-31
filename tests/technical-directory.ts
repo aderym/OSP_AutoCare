@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {filterResources,referenceUrl,sameReference} from '../lib/technical-directory.ts';
+import {resourceKnowledge,partKnowledge} from '../lib/assistant-knowledge.ts';
+const d=JSON.parse(fs.readFileSync('public/technical-resources.json','utf8'));
+assert.equal(d.resources.length,50);
+assert.equal(new Set(d.resources.map((r:any)=>r.id)).size,50);
+assert.deepEqual(resourceKnowledge,d.resources);
+assert.equal(partKnowledge.length,636);
+for(const r of d.resources){assert(d.categories.some((c:any)=>c.id===r.category));assert(['free','paid','mixed','account'].includes(r.access));assert.equal(new URL(r.url).protocol,'https:');}
+assert.equal(referenceUrl('https://bmwtechinfo.bmwgroup.com/'),'https://bmwtechinfo.bmwgroup.com/tisUI/');
+assert.equal(referenceUrl('https://bmwtechinfo.bmwgroup.com/?hdr=yes#login'),'https://bmwtechinfo.bmwgroup.com/tisUI/?hdr=yes#login');
+assert.equal(referenceUrl('https://bmwtechinfo.bmwgroup.com/assets/site_information.pdf'),'https://bmwtechinfo.bmwgroup.com/assets/site_information.pdf');
+assert.equal(referenceUrl('https://www.minitechinfo.com/tisUI/'),'https://minitechinfo.bmwgroup.com/tisUI/');
+assert(sameReference('https://www.realoem.com/bmw/','https://www.realoem.com/bmw/enUS/select'));
+assert(sameReference('https://bmwtechinfo.bmwgroup.com/','https://bmwtechinfo.bmwgroup.com/tisUI/'));
+assert.equal(referenceUrl('https://example.com/parts?q=BMW#diagram'),'https://example.com/parts?q=BMW#diagram');
+assert.equal(filterResources(d.resources,{category:'exploded'}).length,10);
+assert(filterResources(d.resources,{category:'exploded',make:'Toyota'}).some((r:any)=>r.id==='toyotaparts'));
+assert(filterResources(d.resources,{query:'oficial acceso',make:'BMW'}).some((r:any)=>r.id==='bmwaccess'));
+assert(filterResources(d.resources,{category:'paint',access:'free'}).every((r:any)=>r.category==='paint'&&r.access==='free'));
+assert.equal(filterResources(d.resources,{query:'unmatched-resource-xyz'}).length,0);
+console.log('Technical directory: 50 resources, bilingual filters, canonical links and assistant parity passed');

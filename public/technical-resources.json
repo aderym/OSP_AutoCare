@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26",
+  "updated": "2026-10-31",
   "categories": [
     {
       "id": "videos",
@@ -228,14 +228,26 @@
       "name": "BMW Group TechInfo",
       "category": "oem",
       "access": "paid",
-      "url": "https://bmwtechinfo.bmwgroup.com/",
-      "description": "BMW manufacturer technical information. Confirm the required subscription and software.",
-      "es": "Información técnica del fabricante BMW. Confirme suscripción y software necesarios.",
+      "url": "https://bmwtechinfo.bmwgroup.com/tisUI/",
+      "description": "Official BMW TIS entry for the US and Canada. Requires a BMW account and the relevant subscription. For other markets, use BMW AOS; see the official access guide.",
+      "es": "Entrada oficial BMW TIS para EE. UU. y Canadá. Requiere cuenta BMW y la suscripción correspondiente. Para otros mercados use BMW AOS; consulte la guía oficial de acceso.",
       "makes": "BMW",
-      "source": "https://bmwtechinfo.bmwgroup.com/assets/system_requirements.pdf",
-      "checked": "2026-10-26",
+      "source": "https://bmwtechinfo.bmwgroup.com/assets/site_information.pdf",
+      "checked": "2026-10-31",
       "brands": [
         "BMW"
+      ],
+      "links": [
+        {
+          "name": "BMW AOS · other markets",
+          "es": "BMW AOS · otros mercados",
+          "url": "https://aos.bmwgroup.com/"
+        },
+        {
+          "name": "Official access guide (PDF)",
+          "es": "Guía oficial de acceso (PDF)",
+          "url": "https://bmwtechinfo.bmwgroup.com/assets/site_information.pdf"
+        }
       ]
     },
     {
@@ -590,7 +602,7 @@
       "name": "MINI TechInfo",
       "category": "oem",
       "access": "paid",
-      "url": "https://www.minitechinfo.com/tisUI/",
+      "url": "https://minitechinfo.bmwgroup.com/tisUI/",
       "description": "MINI technical-information portal. Confirm subscription, software requirements and vehicle coverage.",
       "es": "Portal de información técnica MINI. Confirme suscripción, requisitos de software y vehículos compatibles.",
       "makes": "MINI",
@@ -598,7 +610,7 @@
         "MINI"
       ],
       "source": "https://www.minitechinfo.com/tisUI/",
-      "checked": "2026-10-28"
+      "checked": "2026-10-31"
     },
     {
       "id": "mitsubishi",
@@ -614,6 +626,164 @@
       ],
       "source": "https://www.mitsubishitechinfo.com/epacarb/home.jsp",
       "checked": "2026-10-28"
+    },
+    {
+      "id": "fordparts",
+      "name": "Ford Genuine Parts",
+      "category": "exploded",
+      "access": "mixed",
+      "url": "https://www.ford.com/parts",
+      "brands": [
+        "Ford",
+        "Lincoln"
+      ],
+      "makes": "Ford / Lincoln",
+      "description": "Official Ford parts entry with vehicle-specific parts lookup and categories. Illustrations, availability and fitment depend on the selected vehicle and listing.",
+      "es": "Entrada oficial de repuestos Ford con búsqueda por vehículo y categorías. Ilustraciones, disponibilidad y compatibilidad dependen del vehículo y del artículo.",
+      "source": "https://www.ford.com/parts",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "toyotaparts",
+      "name": "Toyota Genuine Parts",
+      "category": "exploded",
+      "access": "mixed",
+      "url": "https://autoparts.toyota.com/",
+      "brands": [
+        "Toyota"
+      ],
+      "makes": "Toyota",
+      "description": "Official Toyota parts catalog. Select vehicle or VIN to check parts, applicable illustrations and dealer availability.",
+      "es": "Catálogo oficial de repuestos Toyota. Seleccione vehículo o VIN para consultar partes, ilustraciones disponibles y disponibilidad del concesionario.",
+      "source": "https://autoparts.toyota.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "lexusparts",
+      "name": "Lexus Genuine Parts",
+      "category": "exploded",
+      "access": "mixed",
+      "url": "https://parts.lexus.com/",
+      "brands": [
+        "Lexus"
+      ],
+      "makes": "Lexus",
+      "description": "Official Lexus parts catalog with vehicle selection, part categories and applicable assembly illustrations.",
+      "es": "Catálogo oficial Lexus con selección de vehículo, categorías de partes e ilustraciones de conjuntos según disponibilidad.",
+      "source": "https://parts.lexus.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "nissanparts",
+      "name": "Nissan Genuine Parts",
+      "category": "exploded",
+      "access": "mixed",
+      "url": "https://parts.nissanusa.com/",
+      "brands": [
+        "Nissan"
+      ],
+      "makes": "Nissan",
+      "description": "Official Nissan catalog for vehicle-specific parts and available assembly diagrams. Confirm fitment with VIN and dealer.",
+      "es": "Catálogo oficial Nissan de repuestos por vehículo y diagramas de conjuntos disponibles. Confirme compatibilidad con VIN y concesionario.",
+      "source": "https://parts.nissanusa.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "infinitiparts",
+      "name": "INFINITI Genuine Parts",
+      "category": "exploded",
+      "access": "mixed",
+      "url": "https://parts.infinitiusa.com/",
+      "brands": [
+        "INFINITI"
+      ],
+      "makes": "INFINITI",
+      "description": "Official INFINITI parts catalog with vehicle selection, categories and available parts illustrations.",
+      "es": "Catálogo oficial INFINITI con selección de vehículo, categorías e ilustraciones disponibles de partes.",
+      "source": "https://parts.infinitiusa.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "teslaparts",
+      "name": "Tesla Parts Catalog",
+      "category": "exploded",
+      "access": "account",
+      "url": "https://parts.tesla.com/",
+      "brands": [
+        "Tesla"
+      ],
+      "makes": "Tesla",
+      "description": "Official Tesla electronic parts catalog entry. Account access and ordering eligibility vary by region; use the exact vehicle configuration.",
+      "es": "Entrada al catálogo electrónico oficial Tesla. El acceso con cuenta y las compras varían por región; utilice la configuración exacta del vehículo.",
+      "source": "https://parts.tesla.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "gmparts",
+      "name": "GM Genuine Parts & ACDelco Reference",
+      "category": "manuals",
+      "access": "free",
+      "url": "https://www.gmparts.com/",
+      "brands": [
+        "Chevrolet",
+        "GMC",
+        "Buick",
+        "Cadillac"
+      ],
+      "makes": "Chevrolet / GMC / Buick / Cadillac",
+      "description": "Official GM parts information, product guides and links to genuine parts shopping. Repair procedures are accessed separately through ACDelco TDS.",
+      "es": "Información oficial GM de partes, guías de productos y enlaces para comprar repuestos originales. Los procedimientos se consultan por separado en ACDelco TDS.",
+      "source": "https://www.gmparts.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "bmwaos",
+      "name": "BMW Group AOS · Independent Workshops",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://aos.bmwgroup.com/",
+      "brands": [
+        "BMW",
+        "MINI",
+        "Rolls-Royce"
+      ],
+      "makes": "BMW / MINI / Rolls-Royce",
+      "description": "Official Aftersales Online System for independent workshops outside the US and Canada. Registration, regional eligibility and separate subscriptions apply.",
+      "es": "Sistema oficial de posventa para talleres independientes fuera de EE. UU. y Canadá. Requiere registro y suscripciones según región.",
+      "source": "https://aos.bmwgroup.com/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "rollsroyce",
+      "name": "Rolls-Royce Technical Information",
+      "category": "oem",
+      "access": "paid",
+      "url": "https://rollsroycetechinfo.bmwgroup.com/tisUI/",
+      "brands": [
+        "Rolls-Royce"
+      ],
+      "makes": "Rolls-Royce",
+      "description": "Official Rolls-Royce TIS entry. Account, market eligibility and service-information subscriptions are managed by the manufacturer.",
+      "es": "Entrada oficial Rolls-Royce TIS. El fabricante gestiona cuenta, mercados admitidos y suscripciones de información técnica.",
+      "source": "https://rollsroycetechinfo.bmwgroup.com/tisUI/",
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "bmwaccess",
+      "name": "BMW / MINI / Rolls-Royce TIS & AOS Access Guide",
+      "category": "manuals",
+      "access": "free",
+      "url": "https://bmwtechinfo.bmwgroup.com/assets/site_information.pdf",
+      "brands": [
+        "BMW",
+        "MINI",
+        "Rolls-Royce"
+      ],
+      "makes": "BMW / MINI / Rolls-Royce",
+      "description": "Official PDF explaining TIS and AOS access, supported markets, accounts and available technical-information applications.",
+      "es": "PDF oficial que explica acceso a TIS y AOS, mercados admitidos, cuentas y aplicaciones de información técnica.",
+      "source": "https://bmwtechinfo.bmwgroup.com/assets/site_information.pdf",
+      "checked": "2026-10-31"
     }
   ]
 }

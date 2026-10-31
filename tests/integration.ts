@@ -109,6 +109,20 @@ const searchLink=decodeURIComponent(resourceSearch('https://www.carcarekiosk.com
 await call('payment-settings',{publicKey:'pk_test_qa',secret:'sk_test_dummy_value',direct:'https://example.com/payment'},root);
 const me=await call('me',null,root);assert.equal(me.data.payment.hasSecret,true);assert.equal(JSON.stringify(me.data).includes('sk_test_dummy_value'),false);const stored=await DB.prepare('SELECT data FROM payment_settings WHERE shop_id=?').bind('platform').first();assert.equal(stored.data.includes('sk_test_dummy_value'),false,'secret must be encrypted');
 const exp=await call('export',null,la.cookie);assert.equal(exp.data.customers.length,1);assert.equal(exp.data.users.some((u:any)=>u.password),false);
+// Parts APIs remain authenticated, tenant-gated and never expose provider credentials.
+assert.equal((await call('parts-search',{operation:'status'})).status,401);
+assert.equal((await call('parts-search',{operation:'status'},trialCookie)).status,402);
+assert.equal((await call('parts-settings',{appId:'mock-app-id',secret:'mock-provider-secret'},staff.cookie)).status,400);
+assert.equal((await call('parts-settings',{appId:'mock-app-id',secret:'mock-provider-secret'},la.cookie)).status,400);
+assert.equal((await call('parts-search',{operation:'offers',query:'alternator'},staff.cookie)).data.configured,false);
+assert.equal((await call('parts-settings',{appId:'mock-app-id',secret:'mock-provider-secret',enabled:true},root)).status,200);
+const partsMe=(await call('me',null,root)).data;assert(partsMe.platformPayment.hasParts);assert(!JSON.stringify(partsMe).includes('mock-provider-secret'));assert(!JSON.stringify(partsMe).includes('mock-app-id'));
+const partsStored=await DB.prepare('SELECT data FROM payment_settings WHERE shop_id=?').bind('platform').first();assert(!partsStored.data.includes('mock-provider-secret'));
+assert.equal((await call('parts-search',{operation:'offers',query:'x'},staff.cookie)).status,400);
+assert.equal((await call('parts-search',{operation:'photos',query:'1HGCM82633A004352'},staff.cookie)).status,400);
+const partsFetch=globalThis.fetch;let partsCalls=0;globalThis.fetch=async(input:any,init:any)=>{partsCalls++;const path=String(input);assert(!path.includes('1HGCM82633A004352'));if(path.includes('/oauth2/'))return new Response(JSON.stringify({access_token:'mock-provider-access-token',expires_in:7200}));assert(path.startsWith('https://api.ebay.com/buy/browse/'));return new Response(JSON.stringify({total:1,itemSummaries:[{itemId:'example-listing',title:'Alternator example',itemWebUrl:'https://www.ebay.com/itm/1',price:{value:'80',currency:'USD'},compatibilityMatch:'PARTIAL'}]}));};
+const partsResult=await call('parts-search',{operation:'offers',query:'alternator',vehicle:{year:2024,make:'Toyota',model:'Camry',vin:'1HGCM82633A004352'}},staff.cookie);assert.equal(partsResult.status,200);assert.equal(partsResult.data.items[0].compatibility,'PARTIAL');assert.equal(partsCalls,2);assert(!JSON.stringify(partsResult.data).includes('mock-provider-access-token'));globalThis.fetch=partsFetch;
+await call('parts-settings',{clear:true,enabled:false},root);assert.equal((await call('parts-search',{operation:'status'},staff.cookie)).data.configured,false);
 // Stripe HTTP is mocked; no external request or real charge occurs.
 await call('payment-settings',{publicKey:'pk_test_qa',secret:'sk_test_dummy_value',webhook:'whsec_dummy_value'},root);
 await call('shops',{id:a,enabled:true,paid_until:0},root);

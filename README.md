@@ -292,3 +292,9 @@ The default marker mode now follows exterior front/side/rear, roof and underbody
 The bilingual library now exposes all 50 technical resources, with 10 parts/assembly catalog entries, category/make/access filters, pagination and Save reference actions. Saved workshop references remain separate from the shared directory. BMW TIS uses its direct `/tisUI/` entry, with official market/access guidance and AOS alternatives. Known historical BMW/MINI and RealOEM entry links are normalized when opened or saved. The assistant's local resource index matches the directory; run `python3 scripts/sync-technical-knowledge.py` after editing resources. Provider accounts, regional coverage and subscriptions remain external; catalog entry verification does not certify every vehicle lookup or paid document.
 
 Validation: TypeScript, integration suite, `tests/technical-directory.ts`, local browser checks for filters/save/legacy duplicate recognition, Sites and standalone builds. BMW landing page verified to display the official login and subscription screen.
+
+### Parts finder · 2026-10-31
+
+New bilingual **Parts finder / Buscador de partes** menu: vehicle/VIN context, 636 generic part references, workshop stock, 37 supplier/catalog destinations, reference image gallery and optional eBay live listing integration. Parts can be reviewed in inventory and work-order drafts. Provider search links are distinguished from fetched listings; external inventories are not mirrored. Live eBay offers need production Browse API credentials in owner Settings; local search, catalog links and Commons image references do not require OpenAI. See [configuration and limitations](docs/PARTS_FINDER.md).
+
+Validated with TypeScript, parts finder adapter/privacy tests, API integration tests, local browser checks and both Sites/standalone builds. No production eBay credentials were provided, so live eBay access remains unverified.

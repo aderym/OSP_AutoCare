@@ -1,4 +1,4 @@
-import {cleanPartsContext,searchEbay,searchPartPhotos} from './parts-finder.ts';
+import {cleanPartsContext,searchEbay,searchPartPhotos,searchPartMediaPage,mediaPageOffset} from './parts-finder.ts';
 import {decodeAssistantMedia,photoSuppliers} from './assistant-media.ts';
 import {businessProfile} from './business-profile.ts';
 import {rankKnowledge,cleanVehicle,findWorkshopMatches,assistantInstructions,partContext} from './assistant.ts';
@@ -65,7 +65,7 @@ if(action==='parts-search'){
  check(['offers','photos'].includes(body.operation),'Unknown parts operation');check(typeof body.query==='string'&&body.query.trim().length>=2&&body.query.length<=150,'Part query: 2–150 characters / Consulta: 2–150 caracteres');
  const rate=await db.prepare('INSERT INTO auth_attempts (key,count,until) VALUES (?,1,?) ON CONFLICT(key) DO UPDATE SET count=CASE WHEN until<? THEN 1 ELSE count+1 END,until=CASE WHEN until<? THEN excluded.until ELSE until END RETURNING count').bind('parts-rate:'+shopId+':'+u.id,now()+60000,now(),now()).first();if(rate.count>12)return json({error:'Parts search limit reached. Try in one minute. / Espere un minuto.'},429);
  const vehicle=cleanPartsContext(body.vehicle);const query=body.query.trim().replace(/\b[A-HJ-NPR-Z0-9]{17}\b/gi,'').trim();check(query.length>=2,'Enter a part name or number, not a VIN / Ingrese nombre o número de parte');
- if(body.operation==='photos'){const jobs=await Promise.allSettled([searchPartPhotos(query),...(body.includeDiagrams?[searchPartPhotos(query,fetch,'diagram')]:[])]);return json({images:jobs[0].status==='fulfilled'?jobs[0].value:[],diagrams:jobs[1]?.status==='fulfilled'?jobs[1].value:[],imageUnavailable:jobs[0].status==='rejected',diagramUnavailable:jobs[1]?.status==='rejected',kind:'reference',fetchedAt:new Date().toISOString()});}
+ if(body.operation==='photos'){const offset=mediaPageOffset(body.offset);const jobs=await Promise.allSettled([searchPartMediaPage(query,fetch,'photo',offset),...(body.includeDiagrams?[searchPartPhotos(query,fetch,'diagram')]:[])]);return json({images:jobs[0].status==='fulfilled'?jobs[0].value.images:[],nextOffset:jobs[0].status==='fulfilled'?jobs[0].value.nextOffset:null,diagrams:jobs[1]?.status==='fulfilled'?jobs[1].value:[],imageUnavailable:jobs[0].status==='rejected',diagramUnavailable:jobs[1]?.status==='rejected',kind:'reference',fetchedAt:new Date().toISOString()});}
  if(!configured)return json({configured:false,items:[],message:'eBay API not configured / API eBay sin configurar'});
  try{return json({configured:true,...await searchEbay(query,vehicle,{appId:cfg.partsAppId,secret:await crypt(cfg.partsSecret,env.PAYMENT_ENCRYPTION_KEY,true)})});}catch{return json({error:'eBay could not return offers. Verify production API credentials and Browse API access in Settings. / Revise credenciales y acceso Browse API eBay en Configuración.'},502);}
 }

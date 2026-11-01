@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {cleanPartsContext,partSearchText,providerMatches,providerSearchUrl,localPartMatches,normalizeEbayItem,normalizeCommons,searchEbay,searchPartPhotos} from '../lib/parts-finder.ts';
+import {cleanPartsContext,partSearchText,providerMatches,providerSearchUrl,localPartMatches,normalizeEbayItem,normalizeCommons,searchEbay,searchPartPhotos,searchPartMediaPage,mediaPageOffset,mergePartPhotos} from '../lib/parts-finder.ts';
 const providers=JSON.parse(fs.readFileSync('public/parts-providers.json','utf8')).providers;
 assert.equal(providers.length,37);assert.equal(new Set(providers.map((p:any)=>p.id)).size,37);
 const amayama=providers.find((p:any)=>p.id==='amayama');assert(amayama);assert(providers.some((p:any)=>p.type==='Used'));assert(providers.some((p:any)=>p.type==='Paint'));
@@ -24,3 +24,7 @@ console.log('Parts finder passed: 37 sources, bilingual matches, private VIN con
 let diagramQuery='';const diagramImages=await searchPartPhotos('alternator',async(input:any)=>{diagramQuery=new URL(String(input)).searchParams.get('gsrsearch')||'';return new Response(JSON.stringify(commons));},'diagram');assert(diagramQuery.includes('diagram'));assert.equal(diagramImages.length,1);assert(!diagramQuery.includes(vehicle.vin!));
 
 assert.equal(normalizeCommons({query:{pages:{1:{title:'File:Book.pdf',imageinfo:[{thumburl:'https://upload.wikimedia.org/book.jpg',descriptionurl:'https://commons.wikimedia.org/wiki/File:Book.pdf',extmetadata:{LicenseShortName:{value:'Public domain'}}}]}}}},'diagram').length,0,'book covers are not part diagrams');
+
+assert.equal(mediaPageOffset(undefined),0);for(const invalid of [-1,1.5,10001,'invalid'])assert.throws(()=>mediaPageOffset(invalid));
+let requestedPage='';const pageResult=await searchPartMediaPage('alternator',async(input:any)=>{requestedPage=String(input);return new Response(JSON.stringify({...commons,continue:{gsroffset:48}}));},'photo',24);assert.equal(pageResult.nextOffset,48);assert.equal(new URL(requestedPage).searchParams.get('gsrlimit'),'24');assert.equal(new URL(requestedPage).searchParams.get('gsroffset'),'24');assert.equal(mergePartPhotos(pics,pics).length,1);assert.equal((await searchPartMediaPage('alternator',async()=>new Response(JSON.stringify({...commons,continue:{gsroffset:0}})),'photo',24)).nextOffset,null);
+console.log('Gallery pagination passed: 24/page, validated continuation, duplicate removal and exhausted pages.');

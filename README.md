@@ -302,3 +302,7 @@ Validated with TypeScript, parts finder adapter/privacy tests, API integration t
 ### Combined photo and diagram search
 
 Parts finder now opens a unified local + internet results view: part/stock matches, compact interactive local reference diagram, internet photos, diagram references and OEM catalog shortcuts. One-click examples and result actions run the complete search; detailed supplier/inventory/offer views are optional. Spanish part names also find English inventory names. Media responses tolerate independent provider failures and exclude document covers. Checked with the parts finder, API integration and vehicle studio tests, TypeScript, local browser QA and both builds.
+
+### Expanded parts image gallery
+
+Image-first tiles replace the numbered Internet photos heading and long filenames. The reference photo service now returns up to 24 images per page with provider continuation and Load more photos; loaded results are deduplicated and retained after pagination errors. Compact source/author/license links, enlargement, lazy loading and responsive layouts are preserved. Verified: 24 initial tiles, 48 after loading more, no old heading, adapter/API tests, TypeScript and Sites/standalone builds.

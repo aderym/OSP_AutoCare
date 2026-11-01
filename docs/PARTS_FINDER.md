@@ -41,3 +41,9 @@ No OpenAI key is required for local part search, catalog links or reference imag
 ## Uso en español
 
 Seleccione el vehículo registrado o ingrese VIN/año/marca/modelo. Elija una orden si quiere agregar piezas a su borrador. Escriba nombre, alias o número de parte y pulse **Buscar partes**. Revise **Catálogo**, **Inventario**, **Proveedores**, **Ofertas** y **Fotos**. Las fotos de referencia no confirman compatibilidad. En proveedores use **Abrir catálogo**, **Buscar web en este sitio** o la consulta de número de parte de PartSouq. El VIN solo se envía a PartSouq al activar su opción y abrir su botón específico; los demás catálogos permiten copiarlo y consultarlo manualmente. Confirme el número OEM, motor, versión, posición, condición y precio final antes de comprar.
+
+## Simplified combined search
+
+The default view now keeps local part/stock matches, an interactive local component diagram, internet photos and internet diagram references together. Quick example buttons and each local result’s **Photo + diagram / Foto + diagrama** button start the complete search with one click. Detailed inventory, supplier and live-offer tabs remain available through the optional detailed-views control. Spanish catalog names also resolve to English inventory names.
+
+The photo API can additionally retrieve diagram references with `includeDiagrams: true`. Each service result has its own unavailable flag, so a failed diagram request does not discard successful photos. Results retain attribution and source links; PDF book covers and other non-image documents are excluded. A generic local 3D illustration is not an OEM drawing or a confirmed VIN fitment. Web photo/diagram buttons provide a wider contextual search when the reference service has no matching image. External prices still require the optional provider connection; image and diagram references do not require an OpenAI or eBay key.

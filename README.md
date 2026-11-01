@@ -298,3 +298,7 @@ Validation: TypeScript, integration suite, `tests/technical-directory.ts`, local
 New bilingual **Parts finder / Buscador de partes** menu: vehicle/VIN context, 636 generic part references, workshop stock, 37 supplier/catalog destinations, reference image gallery and optional eBay live listing integration. Parts can be reviewed in inventory and work-order drafts. Provider search links are distinguished from fetched listings; external inventories are not mirrored. Live eBay offers need production Browse API credentials in owner Settings; local search, catalog links and Commons image references do not require OpenAI. See [configuration and limitations](docs/PARTS_FINDER.md).
 
 Validated with TypeScript, parts finder adapter/privacy tests, API integration tests, local browser checks and both Sites/standalone builds. No production eBay credentials were provided, so live eBay access remains unverified.
+
+### Combined photo and diagram search
+
+Parts finder now opens a unified local + internet results view: part/stock matches, compact interactive local reference diagram, internet photos, diagram references and OEM catalog shortcuts. One-click examples and result actions run the complete search; detailed supplier/inventory/offer views are optional. Spanish part names also find English inventory names. Media responses tolerate independent provider failures and exclude document covers. Checked with the parts finder, API integration and vehicle studio tests, TypeScript, local browser QA and both builds.

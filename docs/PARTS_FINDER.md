@@ -51,3 +51,31 @@ The photo API can additionally retrieve diagram references with `includeDiagrams
 ## Expanded image gallery
 
 The image section has no numbered heading or filename captions. Responsive photo tiles preserve compact author/license links and open the full image dialog. Photo queries request up to 24 records per page and use the official response continuation offset for **Load more photos / Cargar más fotos**. Results append without duplicate source URLs; changing the query invalidates pending loads. Offsets are validated and bounded to the provider's 10,000-record search window. A missing continuation hides the load-more control. Failure preserves already loaded photos and allows retry. Source coverage and relevance vary; the wider web-search link remains available. The alternator category was checked against two live pages (24 + 24 distinct images).
+
+## Bundled PNG library (initial selection)
+
+The finder now displays **30 local PNGs for 15 representative components across all 14 existing systems** before internet results. This is initial coverage, not an image for each of the 636 references. Every included component has an original illustration and an annotated schematic with three bilingual identification callouts. These are **generic, not OEM, not to scale, and not repair/installation instructions**. There are no torque specifications, wiring pinouts or verified VIN applications.
+
+- Browse immediately on opening the finder, or filter by English/Spanish name, accent-insensitive aliases and system. The local catalog's stable `part-*` IDs constrain media results, and catalog cards link to included illustrations.
+- Switch between illustrations, annotated diagrams and all images. The gallery shows up to 24 local assets initially and supports showing more. Click to enlarge or download the PNG. The same library is available in the detailed images view.
+- The existing registered vehicle/work-order/shared vehicle catalog selection supplies display/search context. No VIN, customer details, make/model or year are added to local media URLs. The library makes **no fitment claim**, even when a vehicle has been selected. A different vehicle does not turn a generic reference into an exact part match.
+- Local lookups need no image API, database request or credentials. PNGs are same-origin static files in the application release. Internet photos, diagrams, pagination, attribution and optional seller offers remain complementary. This does not add a service-worker offline cache or promise an offline app launch; the app/static files must already be available.
+
+### Files, provenance and regeneration
+
+`public/parts-media/<system>/<component-id>/{illustration,diagram}.png` contains the bundled assets. `public/parts-media/manifest.json` records stable component IDs, bilingual names/aliases, system/category, media kind, original provenance, author, license, generic vehicle scope, explicit `oem: false`, `fitment: unverified`, editable SVG source and PNG SHA-256. `lib/parts-media.ts` performs pure local matching. Images and manifest are part of source control; no database migration, seed change, customer data change or production connection is required.
+
+All 30 images are original programmatic vector drawings, rasterized to PNG. The drawings/SVGs/PNGs in this selection are dedicated under **CC0-1.0** by OSP AutoCare; the attribution record is retained in the manifest and `public/parts-media/ATTRIBUTION.md`. This dedication covers these artwork files, not the application's code or other images. **No third-party photographs are stored or redistributed by this change.** Existing live Wikimedia results stay external and retain their own author/license/source links.
+
+To extend coverage, add an existing catalog component ID, system slug, drawing and translated callouts to `assets/parts-media/components.json` and `scripts/generate-parts-media.py`. With Python 3, Node and installed app dependencies (including Next.js's `sharp` optional dependency), run:
+
+```sh
+python scripts/generate-parts-media.py
+npm run test:parts-media
+```
+
+The generator never downloads images or contacts a database. Review the regenerated SVG and PNG visually and commit both with the manifest. Raster output hashes can differ between rendering/font versions; regenerate and commit hashes together. Text uses DejaVu Sans; install that font for the intended appearance. Do not attach an unlicensed third-party asset or relabel these drawings as OEM. Future third-party additions must document the actual source, creator, redistribution/storage permission, license version/link, attribution, modifications and any share-alike obligations before acceptance. Future OEM assets additionally require authorized provenance and explicit application metadata; no OEM artwork is included today.
+
+### Validation
+
+`npm run test:parts-media` checks PNG signatures/dimensions/hashes, coverage of 14 systems, stable catalog linkage, EN/ES/alias parity, provenance and fitment flags, filtering, missing coverage, VIN-free display context, network-independent lookup, bilingual React output and default finder integration with network disabled. The PR workflow runs it with existing catalog/finder regressions and TypeScript checks. Tests use fixtures/static files; they do not access or modify production data.

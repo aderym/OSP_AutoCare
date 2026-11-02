@@ -1,0 +1,17 @@
+[
+ {"componentId":"part-6","system":"engine","drawing":"piston","labels":[["Crown","Corona",310,125],["Ring grooves","Ranuras de anillos",360,155],["Wrist pin bore","Alojamiento del bulón",330,235]]},
+ {"componentId":"part-12","system":"engine","drawing":"pan","labels":[["Mounting flange","Brida de montaje",210,125],["Sump","Depósito",320,240],["Drain plug","Tapón de drenaje",405,265]]},
+ {"componentId":"part-36","system":"cooling","drawing":"radiator","labels":[["Inlet neck","Entrada",185,120],["Cooling core","Núcleo",310,195],["Side tank","Tanque lateral",420,205]]},
+ {"componentId":"part-50","system":"fuel-air","drawing":"injector","labels":[["Electrical connector","Conector eléctrico",380,160],["Fuel inlet","Entrada de combustible",310,105],["Nozzle","Boquilla",310,285]]},
+ {"componentId":"part-77","system":"ignition-electrical","drawing":"alternator","labels":[["Pulley","Polea",200,210],["Vented housing","Carcasa ventilada",320,190],["Mounting lug","Soporte de montaje",390,270]]},
+ {"componentId":"part-90","system":"exhaust-emissions","drawing":"catalyst","labels":[["Inlet pipe","Tubo de entrada",165,205],["Converter shell","Carcasa",310,205],["Outlet pipe","Tubo de salida",455,205]]},
+ {"componentId":"part-118","system":"transmission-drivetrain","drawing":"shaft","labels":[["Yoke","Horquilla",175,200],["Shaft tube","Tubo del eje",310,200],["Universal joint","Cruceta",445,200]]},
+ {"componentId":"part-127","system":"suspension-steering","drawing":"strut","labels":[["Top mount","Soporte superior",310,110],["Coil spring","Resorte helicoidal",335,180],["Strut body","Cuerpo del puntal",310,270]]},
+ {"componentId":"part-149","system":"brakes","drawing":"rotor","labels":[["Friction surface","Superficie de fricción",390,185],["Center bore","Orificio central",310,205],["Bolt hole","Orificio de perno",350,235]]},
+ {"componentId":"part-163","system":"hvac","drawing":"compressor","labels":[["Pulley","Polea",195,210],["Compressor housing","Carcasa del compresor",310,205],["Refrigerant ports","Puertos de refrigerante",365,130]]},
+ {"componentId":"part-175","system":"body-collision","drawing":"bumper","labels":[["Cover surface","Superficie de cubierta",310,150],["Grille opening","Abertura de parrilla",310,220],["Mounting tab","Pestaña de montaje",165,145]]},
+ {"componentId":"part-221","system":"interior-safety","drawing":"belt","labels":[["Retractor","Retractor",205,255],["Webbing","Cinta",310,170],["Latch plate","Lengüeta",415,215]]},
+ {"componentId":"part-235","system":"maintenance-fluids","drawing":"filter","labels":[["Canister","Carcasa",310,205],["Base gasket","Junta de base",310,120],["Threaded outlet","Salida roscada",310,105]]},
+ {"componentId":"part-255","system":"hybrid-electric","drawing":"battery","labels":[["Protective enclosure","Carcasa protectora",210,245],["Illustrative modules","Módulos ilustrativos",310,185],["HV connector","Conector de alta tensión",440,220]]},
+ {"componentId":"part-615","system":"paint-refinishing","drawing":"spray","labels":[["Paint cup","Depósito de pintura",310,125],["Air cap","Cabezal de aire",415,200],["Trigger","Gatillo",335,235]]}
+]

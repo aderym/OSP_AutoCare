@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="490" viewBox="0 0 640 490">
+<rect width="640" height="490" fill="#f5f8fa"/>
+<g font-family="DejaVu Sans, sans-serif"><text x="28" y="32" font-size="16" fill="#18344a">Seat belt / Cinturón de seguridad</text>
+<text x="28" y="57" font-size="12" fill="#426076">OSP AutoCare · ANNOTATED SCHEMATIC / ESQUEMA ANOTADO</text>
+<g stroke="#18344a" stroke-width="3" stroke-linejoin="round" fill="#aedbd9"><rect x="175" y="230" width="60" height="65" rx="12"/><path d="M195 230l90-125 20 15-90 120M285 105l130 90-14 20-116-85"/><path d="M400 195h35v40h-35zM410 205h15v15h-15z" fill="#e7b942"/></g>
+<circle cx="205" cy="255" r="13" fill="#18344a" stroke="#fff"/><text x="205" y="260" text-anchor="middle" fill="#fff" font-size="14">1</text><text x="28" y="373" font-size="16" fill="#18344a">1. Retractor / Retractor</text><circle cx="310" cy="170" r="13" fill="#18344a" stroke="#fff"/><text x="310" y="175" text-anchor="middle" fill="#fff" font-size="14">2</text><text x="28" y="396" font-size="16" fill="#18344a">2. Webbing / Cinta</text><circle cx="415" cy="215" r="13" fill="#18344a" stroke="#fff"/><text x="415" y="220" text-anchor="middle" fill="#fff" font-size="14">3</text><text x="28" y="419" font-size="16" fill="#18344a">3. Latch plate / Lengüeta</text><text x="28" y="460" font-size="12" fill="#426076">Generic reference · Not OEM · Not to scale · No VIN fitment</text>
+<text x="28" y="478" font-size="12" fill="#426076">Referencia genérica · No OEM · Sin escala · No confirma ajuste por VIN</text></g></svg>

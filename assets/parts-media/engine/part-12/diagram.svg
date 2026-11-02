@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="490" viewBox="0 0 640 490">
+<rect width="640" height="490" fill="#f5f8fa"/>
+<g font-family="DejaVu Sans, sans-serif"><text x="28" y="32" font-size="16" fill="#18344a">Oil pan / Cárter de aceite</text>
+<text x="28" y="57" font-size="12" fill="#426076">OSP AutoCare · ANNOTATED SCHEMATIC / ESQUEMA ANOTADO</text>
+<g stroke="#18344a" stroke-width="3" stroke-linejoin="round" fill="#aedbd9"><path d="M185 125h235l20 30-40 125H235l-50-125z"/><path d="M185 125l20 30h235M205 155l30 125M235 280l20-100h135l10 100"/><path d="M400 255h22v20h-22z" fill="#e7b942"/></g>
+<circle cx="210" cy="125" r="13" fill="#18344a" stroke="#fff"/><text x="210" y="130" text-anchor="middle" fill="#fff" font-size="14">1</text><text x="28" y="373" font-size="16" fill="#18344a">1. Mounting flange / Brida de montaje</text><circle cx="320" cy="240" r="13" fill="#18344a" stroke="#fff"/><text x="320" y="245" text-anchor="middle" fill="#fff" font-size="14">2</text><text x="28" y="396" font-size="16" fill="#18344a">2. Sump / Depósito</text><circle cx="405" cy="265" r="13" fill="#18344a" stroke="#fff"/><text x="405" y="270" text-anchor="middle" fill="#fff" font-size="14">3</text><text x="28" y="419" font-size="16" fill="#18344a">3. Drain plug / Tapón de drenaje</text><text x="28" y="460" font-size="12" fill="#426076">Generic reference · Not OEM · Not to scale · No VIN fitment</text>
+<text x="28" y="478" font-size="12" fill="#426076">Referencia genérica · No OEM · Sin escala · No confirma ajuste por VIN</text></g></svg>

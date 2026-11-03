@@ -21,8 +21,8 @@ for(const name of ['Engine assembly','Piston','Spark plug','Engine oil filter','
  const part=parts.find((p:any)=>p.name===name);assert(part,name);const placement=partPlacement(part);const preview=buildComponentPreview(part,placement.tag,'suv',name==='High voltage battery');assert(preview.faces.length>0,name);assert(preview.faces.every(f=>f.points.flat().every(Number.isFinite)),name);const pp=preview.faces.flatMap(f=>f.points);const extent=[0,1,2].map(i=>Math.max(...pp.map(p=>p[i]))-Math.min(...pp.map(p=>p[i])));assert(Math.abs(Math.max(...extent)-2.8)<.001,name);
  if(['Piston','Spark plug','Engine oil filter'].includes(name))assert.equal(preview.specific,true,name);
 }
-for(const name of ['Valve cover gasket','Piston ring set','Spark plug wire set'])assert.equal(buildComponentPreview({name},'engine','car',false).specific,false,name);
-assert.equal(buildComponentPreview({name:'Strut mount'},'suspension','car',false).specific,false);
+for(const [name,family] of [['Valve cover gasket','gasket'],['Piston ring set','ring'],['Spark plug wire set','wire']]){const preview=buildComponentPreview({name},'engine','car',false);assert.equal(preview.specific,true,name);assert.equal(preview.family,family,name);assert(preview.faces.length>20,name);}
+assert.equal(buildComponentPreview({name:'Strut mount'},'suspension','car',false).family,'mount');
 assert(pointInPolygon(1,1,[{x:0,y:0},{x:2,y:0},{x:2,y:2},{x:0,y:2}]));assert(!pointInPolygon(3,1,[{x:0,y:0},{x:2,y:0},{x:2,y:2},{x:0,y:2}]));
 const a=project3D([1,1,0],{yaw:0,pitch:.4,zoom:1},800,450),b=project3D([1,1,0],{yaw:1,pitch:.4,zoom:1},800,450);assert.notEqual(a.x,b.x);
 console.log('PASS: four contemporary bodies, electric/combustion geometry, cylinder axes, isolated part fitting, component/assembly labels, polygon picking and rotation.');

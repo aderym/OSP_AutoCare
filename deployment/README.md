@@ -77,3 +77,17 @@ Las preguntas transcritas reciben lectura automática de la respuesta; también 
 un botón Escuchar si el navegador bloquea reproducción automática. El audio de
 salida utiliza las voces del dispositivo. Después de actualizar, reconstruya la
 imagen y vuelva a crear el servicio conservando el volumen de datos.
+
+## Archivo completo actualizado
+
+Después de compilar el frontend, genere el ZIP con fuentes y compilación:
+
+```bash
+pnpm exec vite build --config standalone/vite.config.ts
+python3 scripts/package-complete.py --output deliverables/OSP_AutoCare-completo.zip
+```
+
+La entrega incluye `DELIVERY-MANIFEST.json` con el commit y los SHA-256.
+El flujo de Actions en `main` construye Docker y publica el ZIP como artefacto
+`OSP_AutoCare-completo` (retención de 90 días); el código y los recursos permanecen en Git.
+Mantenga siempre Docker/Compose, las plantillas de entorno y este generador al actualizar.

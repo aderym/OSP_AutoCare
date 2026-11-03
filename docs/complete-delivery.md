@@ -1,26 +1,22 @@
-# Entrega completa — 2026-10-30
+# Entrega completa — 2026-11-02
 
-Se comparó cada archivo versionado del Site con el repositorio. El código, recursos,
-catálogos y diseño actuales coincidían. Los únicos archivos exclusivos del Site eran
-el antiguo Dockerfile, Compose y su archivo de exclusiones; la infraestructura
-externa había sido separada previamente del repositorio.
+Se incorporó la versión 40 publicada de OSP AutoCare al repositorio GitHub,
+conservando la biblioteca PNG y los archivos de despliegue existentes.
+Incluye el navegador de marcas/modelos, logos, tarjetas adaptables y dibujos
+transparentes: 636 referencias de catálogo y 157 modelos geométricos genéricos.
 
-Se agregó `deployment/` como opción independiente completa, sin reemplazar la
-infraestructura externa. El Dockerfile copia todo `lib/` para incluir los módulos
-actuales como `business-profile.ts`. Se conectó también el inicializador existente
-del administrador de una captura sanitizada al arranque del servidor independiente.
+Verificación de esta entrega: compilación standalone, TypeScript, nueve suites
+de catálogos/interfaz/recursos y arranque con la misma estructura de carpetas del
+Dockerfile. Se comprobó login inicial, logos JPEG, dibujos WebP y el índice de marcas.
+Docker no está instalado en el entorno de preparación. El flujo de GitHub Actions
+construye la imagen desde `deployment/Dockerfile` y genera el ZIP completo en `main`.
+Consulte el resultado de Actions para conocer la verificación del contenedor.
 
-La entrega incluye fuentes, recursos, catálogos, esquema/migraciones, capturas
-sanitizadas con sus fechas, configuración de ejemplo, instrucciones y compilación
-`standalone-dist/` dentro del ZIP. El ZIP se genera con `scripts/package-complete.py`;
-`DELIVERY-MANIFEST.json` permite verificar cada archivo mediante SHA-256.
+El ZIP se genera con `scripts/package-complete.py` e incluye frontend compilado,
+fuentes, recursos, Docker/Compose, instrucciones, capturas sanitizadas existentes
+y `DELIVERY-MANIFEST.json` con el commit y los SHA-256 de cada archivo.
+Las capturas mantienen su propia fecha: no se exportó de nuevo la base viva.
+Se excluyen credenciales reales, sesiones, archivos de ejecución y node_modules.
 
-Se verificaron: compilación standalone, tres suites de pruebas y arranque limpio
-con los directorios de ejecución del Dockerfile. La prueba de arranque comprobó el
-MIME del manifest y el login OSP sobre una copia temporal de la base inicial.
-Docker no está disponible en este entorno: la construcción de la imagen debe
-validarse en el VPS. No se accedió al folder remoto `remoto_ssh` ni al VPS del usuario.
-
-Las capturas de datos guardadas conservan su propia fecha; esta entrega no es una
-copia nueva de la base viva del Site. No incluye contraseñas reales, sesiones,
-claves API, variables privadas ni dependencias descargadas (`node_modules`).
+Esta sincronización actualiza GitHub. No ejecuta comandos en el VPS ni cambia
+la base de producción. La infraestructura externa `remoto_ssh` se conserva.

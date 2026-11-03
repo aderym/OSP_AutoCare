@@ -1,4 +1,5 @@
 import {buildVehicleScene} from './vehicle-scene.ts';
+import {detailedComponentModel} from './component-models.ts';
 import {meshBuilder,fitAssembly,type Face} from './vehicle-geometry.ts';
 import {engineAssembly,alternatorAssembly,brakeAssembly} from './vehicle-engine.ts';
 import type {BodyType} from './vehicle-map.ts';
@@ -53,6 +54,8 @@ export const inspectableComponents=[
  {tag:'rearBumper',name:'Rear bumper',es:'Parachoques trasero',part:'Rear bumper cover',at:[2.32,.47,0]},
 ] as const;
 export function buildComponentPreview(part:any,tag:string,type:BodyType,ev:boolean,drive:DriveLayout='awd'):{faces:Face[],specific:boolean,features:[string,string][],family:string}{
+ const isolated=detailedComponentModel(part);
+ if(isolated){return {faces:fitAssembly(isolated.faces.map(face=>({...face,tag}))),specific:true,family:isolated.family,features:[['Isolated component form and material surfaces','Forma aislada de la pieza y superficies de materiales'],['Depth, joints and visible construction details','Volumen, uniones y detalles visibles de construcción'],['Generic type reference, not an OEM or VIN match','Referencia general del tipo, no una coincidencia OEM ni por VIN']]};}
  const m=meshBuilder(),{box,cylinder,lathe,tube}=m,n=String(part?.name||'').toLowerCase();let specific=true,family=tag;let features:[string,string][]=[];
  if(tag==='oilPan'){m.faces.push(...buildVehicleScene(type,ev,drive).filter(f=>f.tag==='oilPan'));specific=/^oil pan$/.test(n);features=[['Lower sump and cooling ribs','Depósito inferior y nervaduras'],['Drain-plug reference','Referencia del tapón de drenaje']];}
  else if(tag==='uJoint'){universalJoint(m);specific=/u-joint|universal joint/.test(n);features=[['Cross and bearing caps','Cruz y tapas de los rodamientos'],['Yokes and flanges','Horquillas y bridas']];}

@@ -8,7 +8,7 @@ if(!owner)return;
 if(!password)throw Error('Set BOOTSTRAP_ADMIN_PASSWORD before restoring a snapshot with an uninitialized owner.');
 const salt=randomBytes(16).toString('hex');
 const encoded=salt+':'+pbkdf2Sync(password,salt,100000,32,'sha256').toString('hex');
-db.sqlite.prepare("UPDATE users SET password=? WHERE id=? AND password=''").run(encoded,owner.id);
+db.sqlite.prepare("UPDATE users SET password=?,active=1 WHERE id=? AND password=''").run(encoded,owner.id);
 }
 export function database(filename:string){
 fs.mkdirSync(path.dirname(filename),{recursive:true});const sqlite=new DatabaseSync(filename);sqlite.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;');

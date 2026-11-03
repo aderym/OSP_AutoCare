@@ -37,3 +37,6 @@ export async function searchPartMediaPage(query:string,request:typeof fetch=fetc
  const next=Number(d.continue?.gsroffset);return {images:normalizeCommons(d,kind),nextOffset:Number.isInteger(next)&&next>page&&next<=10000?next:null};
 }
 export async function searchPartPhotos(query:string,request:typeof fetch=fetch,kind:'photo'|'diagram'='photo'){return (await searchPartMediaPage(query,request,kind)).images;}
+
+export function localPartMedia(items:any[],query:string){const term=normalizePartText(query).trim();if(!term)return [];return items.filter(p=>(p.topics||[]).some((topic:string)=>normalizePartText(topic).trim()===term));}
+export function mergePartMedia(local:any[],remote:any[]){return [...new Map([...remote,...local].map(p=>[p.url,p])).values()];}

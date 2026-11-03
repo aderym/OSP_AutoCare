@@ -58,3 +58,6 @@ standalone-dist/
 /docker-compose*.yaml
 /docker/
 /nginx/
+
+# Reproducible delivery archives are published as CI artifacts.
+/deliverables/
